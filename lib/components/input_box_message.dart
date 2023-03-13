@@ -7,18 +7,15 @@ class InputBoxMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: const EdgeInsets.only(left: 10),
-            width: 250,
+          Flexible(
             child: TextFormField(
               keyboardType: TextInputType.multiline,
-              expands: true,
-              minLines: null,
-              maxLines: null,
+              // expands: true,
+              minLines: 1,
+              maxLines: 4,
               decoration: const InputDecoration(hintText: "Sua dúvida"),
             ),
           ),
