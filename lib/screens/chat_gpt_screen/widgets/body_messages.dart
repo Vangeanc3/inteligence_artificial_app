@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../components/box_card.dart';
 
 class BodyMessages extends StatelessWidget {
@@ -9,22 +10,48 @@ class BodyMessages extends StatelessWidget {
     return Flexible(
         child: ListView(
       padding: const EdgeInsets.all(8.0),
-      children: const [
-        Padding(
-          padding: EdgeInsets.only(right: 50, bottom: 10),
-          child: BoxCard(widget: Text("Olá, como posso ajudar você?")),
+      children: [
+        Row(
+          children: const [
+            LimitedBox(
+              maxWidth: 300,
+              child: Padding(
+                padding: EdgeInsets.only(right: 25, bottom: 10),
+                child: BoxCard(widget: Text("Olá, como posso ajudar você?")),
+              ),
+            ),
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.only(left: 50, bottom: 10),
-          child: BoxCard(
-              color: Colors.indigoAccent,
-              widget: Text("Quem é a menina mais bonita?")),
+        Row(
+          children: const [
+            LimitedBox(
+              maxWidth: 125,
+              child: Padding(
+                padding: EdgeInsets.only(right: 50, bottom: 10),
+                child: BoxCard(
+                    widget: SpinKitThreeBounce(
+                  color: Colors.white,
+                  size: 20.0,
+                )),
+              ),
+            ),
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 50, bottom: 10),
-          child: BoxCard(
-              widget: Text(
-                  "Hahaha, pergunta fácil. É claro que é a iasmim! Uma japa muito linda e perfeita")),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            LimitedBox(
+              maxWidth: 125,
+              child: Padding(
+                padding: EdgeInsets.only(left: 50, bottom: 10),
+                child: BoxCard(
+                    widget: SpinKitThreeBounce(
+                  color: Colors.white,
+                  size: 20.0,
+                )),
+              ),
+            ),
+          ],
         ),
       ],
     ));

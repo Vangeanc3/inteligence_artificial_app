@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColors {
   static const MaterialColor primaryColor = Colors.deepPurple;
+  static const Color msgSendColor = Colors.indigoAccent;
   static const division = Color.fromRGBO(166, 166, 166, 1.0);
   static const List<Color> headerGradient = [
     Color.fromRGBO(103, 99, 234, 1.0),

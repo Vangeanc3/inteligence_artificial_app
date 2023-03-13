@@ -16,8 +16,8 @@ class _GptScreenState extends State<GptScreen> {
     return Scaffold(
         appBar: AppBar(title: const Text("Mobile GPT")),
         body: Column(
-          children: const [
-            BodyMessages(),
+          children:  [
+            const BodyMessages(),
             InputBoxMessage(),
           ],
         ));

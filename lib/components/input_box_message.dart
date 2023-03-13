@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
-class InputBoxMessage extends StatelessWidget {
+class InputBoxMessage extends StatefulWidget {
   const InputBoxMessage({super.key});
+
+  @override
+  State<InputBoxMessage> createState() => _InputBoxMessageState();
+}
+
+class _InputBoxMessageState extends State<InputBoxMessage> {
+  var msgController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +19,14 @@ class InputBoxMessage extends StatelessWidget {
         children: [
           Flexible(
             child: TextFormField(
+              controller: msgController,
+              validator: (value) {
+                if (validarValor(value)) {
+                  return "Insira algum texto";
+                } else {
+                  return null;
+                }
+              },
               keyboardType: TextInputType.multiline,
               // expands: true,
               minLines: 1,
@@ -28,7 +43,9 @@ class InputBoxMessage extends StatelessWidget {
               ),
               child: IconButton(
                 icon: const Icon(Icons.send_rounded),
-                onPressed: () {},
+                onPressed: () {
+                  enviarMsg(msgController.text);
+                },
               ),
             ),
           ),
@@ -36,4 +53,15 @@ class InputBoxMessage extends StatelessWidget {
       ),
     );
   }
+}
+
+enviarMsg(String msg) {
+  print(msg);
+}
+
+bool validarValor(String? valor) {
+  if (valor != null && valor.isEmpty) {
+    return true;
+  }
+  return false;
 }
