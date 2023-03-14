@@ -17,7 +17,7 @@ class BodyMessages extends StatelessWidget {
               maxWidth: 300,
               child: Padding(
                 padding: EdgeInsets.only(right: 25, bottom: 10),
-                child: BoxCard(widget: Text("Olá, como posso ajudar você?")),
+                child: BoxCard(receveid: true, widget: Text("Olá, como posso ajudar você?")),
               ),
             ),
           ],
@@ -29,6 +29,7 @@ class BodyMessages extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(right: 50, bottom: 10),
                 child: BoxCard(
+                  receveid: true,
                     widget: SpinKitThreeBounce(
                   color: Colors.white,
                   size: 20.0,
@@ -45,6 +46,7 @@ class BodyMessages extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 50, bottom: 10),
                 child: BoxCard(
+                  receveid: true,
                     widget: SpinKitThreeBounce(
                   color: Colors.white,
                   size: 20.0,

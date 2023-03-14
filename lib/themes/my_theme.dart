@@ -5,8 +5,7 @@ ThemeData myTheme = ThemeData(
   primarySwatch: ThemeColors.primaryColor,
   primaryColor: ThemeColors.primaryColor,
   appBarTheme: const AppBarTheme(backgroundColor: ThemeColors.primaryColor),
-  inputDecorationTheme:
-      const InputDecorationTheme(border: OutlineInputBorder()),
+  inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
   brightness: Brightness.dark,
   textTheme: const TextTheme(
     bodyMedium: TextStyle(

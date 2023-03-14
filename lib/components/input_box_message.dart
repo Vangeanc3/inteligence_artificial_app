@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inteligence_artificial_app/data/ia_data.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class InputBoxMessage extends StatefulWidget {
@@ -18,24 +19,32 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: TextFormField(
-              controller: msgController,
-              validator: (value) {
-                if (validarValor(value)) {
-                  return "Insira algum texto";
-                } else {
-                  return null;
-                }
-              },
-              keyboardType: TextInputType.multiline,
-              // expands: true,
-              minLines: 1,
-              maxLines: 4,
-              decoration: const InputDecoration(hintText: "Sua dúvida"),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ThemeColors.primaryColor),
+              child: TextFormField(
+                controller: msgController,
+                validator: (value) {
+                  if (validarValor(value)) {
+                    return "Insira algum texto";
+                  } else {
+                    return null;
+                  }
+                },
+                keyboardType: TextInputType.multiline,
+                // expands: true,
+                minLines: 1,
+                maxLines: 4,
+                decoration: const InputDecoration(
+                    hintText: "Sua dúvida",
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 12)),
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 12, left: 10),
+            padding: const EdgeInsets.only(right: 8, left: 10),
             child: Container(
               decoration: BoxDecoration(
                 color: ThemeColors.primaryColor,
@@ -44,7 +53,7 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
               child: IconButton(
                 icon: const Icon(Icons.send_rounded),
                 onPressed: () {
-                  enviarMsg(msgController.text);
+                  enviarRequisicao(msgController.text);
                 },
               ),
             ),
@@ -55,8 +64,11 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
   }
 }
 
-enviarMsg(String msg) {
-  print(msg);
+enviarRequisicao(String request) {
+  print(mensagens);
+  Map<String, dynamic> mapRequest = {"text": request, "receveid": false};
+  mensagens.add(mapRequest);
+  print(mensagens);
 }
 
 bool validarValor(String? valor) {

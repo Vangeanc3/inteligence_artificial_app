@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/gpt",
       routes: {
         "/login": (context) => const LoginScreen(),
-        "/gpt": (context) => const GptScreen()
+        "/gpt": (context) =>  GptScreen()
       },
     );
   }
