@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/screens/chat_gpt_screen/gpt_screen.dart';
+import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
 import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
 

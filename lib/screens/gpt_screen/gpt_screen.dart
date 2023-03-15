@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/components/box_card.dart';
 import 'package:inteligence_artificial_app/data/ia_data.dart';
-import 'package:inteligence_artificial_app/screens/chat_gpt_screen/widgets/body_messages.dart';
-import 'package:inteligence_artificial_app/themes/my_theme.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 import '../../components/input_box_message.dart';
@@ -10,18 +9,24 @@ import '../../components/input_box_message.dart';
 class GptScreen extends StatefulWidget {
   GptScreen({super.key});
   List<Map<String, dynamic>> boxs = mensagens;
+  bool reloadBool = true;
 
   @override
   State<GptScreen> createState() => _GptScreenState();
 }
 
 class _GptScreenState extends State<GptScreen> {
-  @override
-  void initState() {
+  reloadFunction() {
     setState(() {
-      List<Map<String, dynamic>> boxs = mensagens;
+      widget.reloadBool = !widget.reloadBool;
     });
-    super.initState();
+    Map<String, dynamic> mapRequest = {
+      "text": "",
+      "receveid": true,
+      "loading": true
+    };
+    
+    mensagens.add(mapRequest);
   }
 
   @override
@@ -47,7 +52,14 @@ class _GptScreenState extends State<GptScreen> {
                           right: (widget.boxs[index]["receveid"]) ? 50 : 0,
                         ),
                         child: BoxCard(
-                          widget: Text(widget.boxs[index]["text"]),
+                          widget: (widget.boxs[index]["loading"])
+                              ? ConstrainedBox(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 35),
+                                  child: const SpinKitThreeBounce(
+                                      color: Colors.white, size: 10.0),
+                                )
+                              : Text(widget.boxs[index]["text"]),
                           receveid: widget.boxs[index]["receveid"],
                           color: (widget.boxs[index]["receveid"])
                               ? null
@@ -66,7 +78,9 @@ class _GptScreenState extends State<GptScreen> {
               right: 0,
               child: Container(
                   padding: const EdgeInsets.only(bottom: 5),
-                  child: const InputBoxMessage()))
+                  child: InputBoxMessage(
+                    childChanged: reloadFunction,
+                  )))
         ],
       ),
     );

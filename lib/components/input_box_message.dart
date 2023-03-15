@@ -3,7 +3,8 @@ import 'package:inteligence_artificial_app/data/ia_data.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class InputBoxMessage extends StatefulWidget {
-  const InputBoxMessage({super.key});
+  final void Function() childChanged;
+  const InputBoxMessage({super.key, required this.childChanged});
 
   @override
   State<InputBoxMessage> createState() => _InputBoxMessageState();
@@ -11,6 +12,23 @@ class InputBoxMessage extends StatefulWidget {
 
 class _InputBoxMessageState extends State<InputBoxMessage> {
   var msgController = TextEditingController();
+
+  enviarRequisicao(String request) {
+    print(mensagens);
+    Map<String, dynamic> mapRequest = {
+      "text": request,
+      "receveid": false,
+      "loading": false
+    };
+    mensagens.add(mapRequest);
+  }
+
+  bool validarValor(String? valor) {
+    if (valor != null && valor.isEmpty) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +72,7 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
                 icon: const Icon(Icons.send_rounded),
                 onPressed: () {
                   enviarRequisicao(msgController.text);
+                  widget.childChanged();
                 },
               ),
             ),
@@ -62,18 +81,4 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
       ),
     );
   }
-}
-
-enviarRequisicao(String request) {
-  print(mensagens);
-  Map<String, dynamic> mapRequest = {"text": request, "receveid": false};
-  mensagens.add(mapRequest);
-  print(mensagens);
-}
-
-bool validarValor(String? valor) {
-  if (valor != null && valor.isEmpty) {
-    return true;
-  }
-  return false;
 }
