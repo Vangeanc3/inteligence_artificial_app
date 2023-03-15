@@ -1,61 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:inteligence_artificial_app/data/ia_data.dart';
+import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import '../../../components/box_card.dart';
 
-class BodyMessages extends StatelessWidget {
-  const BodyMessages({super.key});
+class BodyMessages extends StatefulWidget {
+  BodyMessages({super.key});
+  List<Map<String, dynamic>> boxs = mensagens;
 
   @override
+  State<BodyMessages> createState() => _BodyMessagesState();
+}
+
+class _BodyMessagesState extends State<BodyMessages> {
+  @override
   Widget build(BuildContext context) {
-    return Flexible(
-        child: ListView(
-      padding: const EdgeInsets.all(8.0),
-      children: [
-        Row(
-          children: const [
-            LimitedBox(
-              maxWidth: 300,
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            return Align(
+              alignment: (widget.boxs[index]["receveid"])
+                  ? Alignment.topLeft
+                  : Alignment.bottomRight,
               child: Padding(
-                padding: EdgeInsets.only(right: 25, bottom: 10),
-                child: BoxCard(receveid: true, widget: Text("Olá, como posso ajudar você?")),
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: const [
-            LimitedBox(
-              maxWidth: 125,
-              child: Padding(
-                padding: EdgeInsets.only(right: 50, bottom: 10),
+                padding: EdgeInsets.only(
+                  bottom: 8,
+                  left: (!widget.boxs[index]["receveid"]) ? 50 : 0,
+                  right: (widget.boxs[index]["receveid"]) ? 50 : 0,
+                ),
                 child: BoxCard(
-                  receveid: true,
-                    widget: SpinKitThreeBounce(
-                  color: Colors.white,
-                  size: 20.0,
-                )),
+                  widget: (widget.boxs[index]["loading"])
+                      ? ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 35),
+                          child: const SpinKitThreeBounce(
+                              color: Colors.white, size: 10.0),
+                        )
+                      : Text(widget.boxs[index]["text"]),
+                  receveid: widget.boxs[index]["receveid"],
+                  color: (widget.boxs[index]["receveid"])
+                      ? null
+                      : ThemeColors.msgSendColor,
+                ),
               ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
-            LimitedBox(
-              maxWidth: 125,
-              child: Padding(
-                padding: EdgeInsets.only(left: 50, bottom: 10),
-                child: BoxCard(
-                  receveid: true,
-                    widget: SpinKitThreeBounce(
-                  color: Colors.white,
-                  size: 20.0,
-                )),
-              ),
-            ),
-          ],
+            );
+          }, childCount: widget.boxs.length),
         ),
       ],
-    ));
+    );
   }
 }
