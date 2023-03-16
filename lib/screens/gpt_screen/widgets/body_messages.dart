@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/data/ia_data.dart';
+import 'package:inteligence_artificial_app/models/chat_gpt.dart';
+import 'package:inteligence_artificial_app/services/chat_gpt_service.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import '../../../components/box_card.dart';
 
 class BodyMessages extends StatefulWidget {
-  BodyMessages({super.key});
+  BodyMessages({super.key, required this.chatGpt});
+  final ChatGpt chatGpt;
   List<Map<String, dynamic>> boxs = mensagens;
 
   @override
@@ -31,10 +34,35 @@ class _BodyMessagesState extends State<BodyMessages> {
                 ),
                 child: BoxCard(
                   widget: (widget.boxs[index]["loading"])
-                      ? ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 35),
-                          child: const SpinKitThreeBounce(
-                              color: Colors.white, size: 10.0),
+                      ? FutureBuilder(
+                          future:
+                              ChatGptService().buscarResposta(widget.chatGpt),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.none:
+                                return const SpinKitThreeBounce(
+                                  color: Colors.white,
+                                  size: 10,
+                                );
+                                break;
+                              case ConnectionState.waiting:
+                                return const SpinKitThreeBounce(
+                                  color: Colors.white,
+                                  size: 10,
+                                );
+                                break;
+                              case ConnectionState.active:
+                                return const SpinKitThreeBounce(
+                                  color: Colors.white,
+                                  size: 10,
+                                );
+                                break;
+                              case ConnectionState.done:
+                                return Text(snapshot.data);
+                                break;
+                            }
+                            return Container();
+                          },
                         )
                       : Text(widget.boxs[index]["text"]),
                   receveid: widget.boxs[index]["receveid"],
