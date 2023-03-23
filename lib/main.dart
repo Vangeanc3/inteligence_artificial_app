@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
 import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => Mensagens(mensagens: [
+        {"text": const Text("Olá, em que posso ajuda-lo"), "receveid": true}
+      ]))
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/gpt",
       routes: {
         "/login": (context) => const LoginScreen(),
-        "/gpt": (context) =>  GptScreen()
+        "/gpt": (context) => GptScreen()
       },
     );
   }

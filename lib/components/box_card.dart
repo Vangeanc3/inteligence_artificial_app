@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class BoxCard extends StatelessWidget {
   final Widget widget;
   final Color? color;
-  final bool receveid;
-  const BoxCard({super.key, required this.widget, this.color, required this.receveid});
+  const BoxCard({super.key, required this.widget, this.color});
 
   Color? escolheCor(BuildContext context) {
     if (color != null) {

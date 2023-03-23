@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/data/ia_data.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class InputBoxMessage extends StatefulWidget {
-  final void Function() childChanged;
-  const InputBoxMessage({super.key, required this.childChanged});
+  // final void Function() childChanged;
+  const InputBoxMessage({super.key,});
 
   @override
   State<InputBoxMessage> createState() => _InputBoxMessageState();
@@ -12,16 +11,6 @@ class InputBoxMessage extends StatefulWidget {
 
 class _InputBoxMessageState extends State<InputBoxMessage> {
   var msgController = TextEditingController();
-
-  enviarRequisicao(String request) {
-    print(mensagens);
-    Map<String, dynamic> mapRequest = {
-      "text": request,
-      "receveid": false,
-      "loading": false
-    };
-    mensagens.add(mapRequest);
-  }
 
   bool validarValor(String? valor) {
     if (valor != null && valor.isEmpty) {
@@ -71,8 +60,8 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
               child: IconButton(
                 icon: const Icon(Icons.send_rounded),
                 onPressed: () {
-                  enviarRequisicao(msgController.text);
-                  widget.childChanged();
+                  
+                  // widget.childChanged();
                 },
               ),
             ),
