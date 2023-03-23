@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/models/chat_gpt.dart';
+import 'package:inteligence_artificial_app/services/chat_gpt_service.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 

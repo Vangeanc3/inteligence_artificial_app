@@ -18,18 +18,17 @@ class _GptScreenState extends State<GptScreen> {
       body: Stack(
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 50),
-            child: BodyMessages(),
-          ),
-          Positioned(
-            left: 8,
-            bottom: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 3),
-              child: InputBoxMessage(),
-            ),
-          )
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 50),
+              child: BodyMessages()),
+              Positioned(
+                left: 8,
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 3),
+                  child: const InputBoxMessage(),
+                ),
+              )
         ],
       ),
     );
