@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:inteligence_artificial_app/models/chat_gpt.dart';
