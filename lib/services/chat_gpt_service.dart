@@ -23,11 +23,14 @@ class ChatGptService {
     );
 
     if (response.statusCode != 200) {
-      throw Exception();
+      // Onde trata os erros
+      verificaExcecao(json.decode(response.body));
     }
 
-    var chatGptJsonResponse = response.body;
-    print("resposta : $chatGptJsonResponse");
-    return chatGptJsonResponse;
+    return response.body;
+  }
+
+  void verificaExcecao(String error){
+   throw Exception();
   }
 }

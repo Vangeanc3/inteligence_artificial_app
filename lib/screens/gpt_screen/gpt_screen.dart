@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/widgets/body_messages.dart';
+import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 import '../../components/input_box_message.dart';
 
@@ -14,21 +15,26 @@ class _GptScreenState extends State<GptScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Mobile GPT")),
+      appBar: AppBar(
+          backgroundColor: ThemeColors.temaWhats2,
+          title: const Text("Mobile GPT")),
       body: Stack(
         children: [
           const Padding(
-              padding: EdgeInsets.fromLTRB(8, 8, 8, 50),
-              child: BodyMessages()),
-              Positioned(
-                left: 8,
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 3),
-                  child: const InputBoxMessage(),
-                ),
-              )
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 75), child: BodyMessages()),
+          Positioned(
+            left: 0,
+            bottom: 0,
+            right: 0,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 70, maxHeight: 150),
+              child: Container(
+                decoration: const BoxDecoration(color: ThemeColors.temaWhats2),
+                padding: const EdgeInsets.only(bottom: 5, left: 5, top: 5),
+                child: const InputBoxMessage(),
+              ),
+            ),
+          )
         ],
       ),
     );

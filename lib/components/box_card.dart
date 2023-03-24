@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class BoxCard extends StatelessWidget {
   final Widget widget;
@@ -10,6 +11,7 @@ class BoxCard extends StatelessWidget {
       return color;
     }
     return Theme.of(context).cardColor;
+    // return ThemeColors.temaWhats3;
   }
 
   @override

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
-import 'package:inteligence_artificial_app/models/chat_gpt.dart';
-import 'package:inteligence_artificial_app/services/chat_gpt_service.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -34,18 +32,7 @@ class _BodyMessagesState extends State<BodyMessages> {
                       left: (!list.mensagens[index]["receveid"]) ? 50 : 0,
                       right: (list.mensagens[index]["receveid"]) ? 50 : 0,
                     ),
-                    child: BoxCard(
-                      widget: (list.mensagens[index]["receveid"])
-                          ? ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 35),
-                              child: const SpinKitThreeBounce(
-                                  color: Colors.white, size: 10.0),
-                            )
-                          : Text(list.mensagens[index]["text"]),
-                      color: (list.mensagens[index]["receveid"])
-                          ? null
-                          : ThemeColors.msgSendColor,
-                    ),
+                    child: list.mensagens[index]["text"],
                   ),
                 );
               }, childCount: list.mensagens.length),
