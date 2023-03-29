@@ -7,14 +7,16 @@ import 'package:inteligence_artificial_app/themes/my_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => Mensagens(mensagens: [
-        {"text": const BoxCard(widget: Text("Olá, em que posso ajuda-lo")), "receveid": true}
-      ]))
-    ],
-    child: const MyApp(),
-  ));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => Mensagens(mensagens: [
+        {
+          "text": const BoxCard(widget: Text("Olá, em que posso ajuda-lo")),
+          "receveid": true
+        }
+      ]),
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

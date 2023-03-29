@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inteligence_artificial_app/helpers/verify_connection.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
-
-import '../../components/input_box_message.dart';
+import 'package:inteligence_artificial_app/components/input_box_message.dart';
 
 class GptScreen extends StatefulWidget {
   const GptScreen({super.key});
@@ -12,6 +12,12 @@ class GptScreen extends StatefulWidget {
 }
 
 class _GptScreenState extends State<GptScreen> {
+  @override
+  void initState() {
+    super.initState();
+    verifyConnection(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

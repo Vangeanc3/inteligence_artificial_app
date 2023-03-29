@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
-import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
-
-import '../../../components/box_card.dart';
 
 class BodyMessages extends StatefulWidget {
   const BodyMessages({super.key});
