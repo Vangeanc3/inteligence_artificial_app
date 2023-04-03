@@ -7,7 +7,7 @@ ThemeData myTheme = ThemeData(
   appBarTheme: const AppBarTheme(backgroundColor: ThemeColors.primaryColor),
   inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
   brightness: Brightness.dark,
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
     bodyMedium: TextStyle(
       fontSize: 16,
     ),

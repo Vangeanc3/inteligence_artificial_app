@@ -21,9 +21,33 @@ class _GptScreenState extends State<GptScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const UserAccountsDrawerHeader(
+                currentAccountPicture: Icon(Icons.account_circle, size: 50),
+                accountName: Text("Ismael Martins"),
+                accountEmail: Text("ismaelmartins919@gmail.com")),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("Home"),
+              onTap: () {},
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
-          backgroundColor: ThemeColors.temaWhats2,
-          title: const Text("Mobile GPT")),
+        backgroundColor: ThemeColors.temaWhats2,
+        title: const Text("Mobile GPT"),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+                onPressed: () {}, icon: const Icon(Icons.add, size: 30)),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           const Padding(

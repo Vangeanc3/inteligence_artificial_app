@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'IA Mobile',
       theme: myTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/gpt",
+      initialRoute: "/login",
       routes: {
         "/login": (context) => const LoginScreen(),
         "/gpt": (context) => const GptScreen()
