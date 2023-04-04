@@ -1,3 +1,4 @@
+import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/components/box_card.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
@@ -6,7 +7,10 @@ import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dar
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  OpenAI.apiKey = "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";
+  OpenAI.organization = null;
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => Mensagens(mensagens: [
