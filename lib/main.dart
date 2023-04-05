@@ -4,6 +4,7 @@ import 'package:inteligence_artificial_app/components/box_card.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
 import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
+import 'package:inteligence_artificial_app/screens/welcome_screen/welcome_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -33,10 +34,11 @@ class MyApp extends StatelessWidget {
       title: 'IA Mobile',
       theme: myTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/login",
+      initialRoute: "/welcome",
       routes: {
         "/login": (context) => const LoginScreen(),
-        "/gpt": (context) => const GptScreen()
+        "/welcome": (context) => const WelcomeScreen(),
+        "/gpt": (context) => const GptScreen(),
       },
     );
   }
