@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -12,12 +14,14 @@ class WelcomeScreen extends StatelessWidget {
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(103, 99, 234, 1.0),
-                  Color.fromRGBO(195, 107, 255, 1.0),
+                  Colors.white,
+                  Colors.black,
+                  // Color.fromRGBO(103, 99, 234, 1.0),
+                  // Color.fromRGBO(195, 107, 255, 1.0),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                stops: [0.0, 1.0],
+                stops: [0.0, 0.8],
                 tileMode: TileMode.clamp)),
         child: Center(
           child: Stack(
@@ -39,26 +43,39 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 100,
+                bottom: 50,
                 left: 0,
                 right: 0,
                 child: Padding(
                   padding: EdgeInsets.all(40),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Center(
-                        child: Text("Entrar",
-                            style: TextStyle(color: Colors.black)),
+                  child: Container(
+                    width: double.infinity,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: ThemeColors.headerGradient),
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, "/login");
+                      },
+                      child: Text(
+                        "Entrar",
+                        style: GoogleFonts.josefinSans(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 22,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

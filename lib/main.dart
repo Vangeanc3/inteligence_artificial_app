@@ -6,6 +6,7 @@ import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
 import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/welcome_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,9 +37,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/welcome",
       routes: {
-        "/login": (context) => const LoginScreen(),
         "/welcome": (context) => const WelcomeScreen(),
-        "/gpt": (context) => const GptScreen(),
+        // "/gpt": (context) => const GptScreen(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case "/login":
+            return PageTransition(
+                child: LoginScreen(),
+                type: PageTransitionType.bottomToTop,
+                duration: Duration(milliseconds: 500));
+          case "/gpt":
+            return PageTransition(
+                child: GptScreen(),
+                type: PageTransitionType.bottomToTop,
+                duration: Duration(milliseconds: 500));
+          default:
+            return null;
+        }
       },
     );
   }

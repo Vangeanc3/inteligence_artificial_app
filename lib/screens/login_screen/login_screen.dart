@@ -60,27 +60,25 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 100, bottom: 20),
+                          padding: const EdgeInsets.only(top: 60, bottom: 0),
                           child: _logo(),
                         ),
                         _loginLabel(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 100, bottom: 20),
+                          padding: const EdgeInsets.only(top: 50),
+                          child: _iconsLogin(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 50, bottom: 20),
                           child: _labelTextInput(
                               "Email", "seunome@examplo.com", false),
                         ),
                         _labelTextInput("Senha", "suasenha", true),
                         Padding(
-                          padding: const EdgeInsets.only(top: 80.0, bottom: 30),
+                          padding: const EdgeInsets.only(top: 80.0, bottom: 15),
                           child: _loginBtn(context),
                         ),
-                        _signUpLabel(
-                            "Não possui uma conta?", const Color(0xff909090)),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                          child: _signUpLabel(
-                              "Criar conta", const Color(0xff164276)),
-                        ),
+                        _registerBtn(context)
                       ],
                     ),
                   ),
@@ -134,6 +132,32 @@ Widget _loginBtn(BuildContext context) {
   );
 }
 
+Widget _registerBtn(BuildContext context) {
+  return Container(
+    width: double.infinity,
+    height: 60,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      border: Border.all(width: 2, color: Colors.white),
+    ),
+    child: TextButton(
+      onPressed: () {
+        Navigator.pushReplacementNamed(context, "/gpt");
+      },
+      child: Text(
+        "Criar Conta",
+        style: GoogleFonts.josefinSans(
+          textStyle: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 24,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 Widget _labelTextInput(String label, String hintText, bool isPassword) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,14 +193,29 @@ Widget _labelTextInput(String label, String hintText, bool isPassword) {
   );
 }
 
+Widget _iconsLogin() {
+  return Container(
+    child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      Image.asset(
+        "assets/icons/google.png",
+        width: 50,
+      ),
+      Image.asset(
+        "assets/icons/facebook.png",
+        width: 50,
+      )
+    ]),
+  );
+}
+
 Widget _loginLabel() {
   return Center(
     child: Text(
       "IA-Assistente",
       style: GoogleFonts.josefinSans(
         textStyle: const TextStyle(
-          color: Color(0xff164276),
-          fontWeight: FontWeight.w900,
+          color: Colors.white,
+          fontWeight: FontWeight.w400,
           fontSize: 34,
         ),
       ),
@@ -187,8 +226,10 @@ Widget _loginLabel() {
 Widget _logo() {
   return Center(
     child: SizedBox(
-      child: Image.asset("assets/app/icon-android.png"),
-      height: 80,
+      child: Image.asset(
+        "assets/app/icon-android.png",
+        width: 120,
+      ),
     ),
   );
 }
