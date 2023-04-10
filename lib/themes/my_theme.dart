@@ -4,8 +4,9 @@ import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 ThemeData myTheme = ThemeData(
   primarySwatch: ThemeColors.primaryColor,
   primaryColor: ThemeColors.primaryColor,
+  primaryColorLight: const Color(0xff121212),
   appBarTheme: const AppBarTheme(backgroundColor: ThemeColors.primaryColor),
-  inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
+  // inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
   brightness: Brightness.dark,
   textTheme: TextTheme(
     bodyMedium: TextStyle(

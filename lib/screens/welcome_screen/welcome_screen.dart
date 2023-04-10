@@ -24,52 +24,63 @@ class WelcomeScreen extends StatelessWidget {
                 stops: [0.0, 0.8],
                 tileMode: TileMode.clamp)),
         child: Center(
-          child: Stack(
+          child: Column(
             children: [
-              Positioned(
-                bottom: 350,
-                left: 0,
-                right: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              Container(
+                height: 400,
+                child: Stack(
                   children: [
-                    Image.asset("assets/app/icon-android.png", width: 200),
-                    Text(
-                      "IA Assistente",
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    Positioned(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/imgs/background.png"),
+                                fit: BoxFit.fill)),
+                      ),
+                    ),
+                    Positioned(
+                      top: 50,
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Image.asset("assets/app/icon-android.png",
+                                width: 200),
+                            Text(
+                              "IA Assistente",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              Positioned(
-                bottom: 50,
-                left: 0,
-                right: 0,
-                child: Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: ThemeColors.headerGradient),
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, "/login");
-                      },
-                      child: Text(
-                        "Entrar",
-                        style: GoogleFonts.josefinSans(
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 22,
-                          ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(40, 150, 40, 0),
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: ThemeColors.headerGradient),
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, "/login");
+                    },
+                    child: Text(
+                      "Entrar",
+                      style: GoogleFonts.josefinSans(
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 22,
                         ),
                       ),
                     ),

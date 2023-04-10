@@ -47,7 +47,7 @@ dependencies:
   page_transition: ^2.0.9
 
 flutter_native_splash:
-  color: "#000000"
+  color: "#ffffff"
   image: "assets/app/splash.png"
   android: true
   ios: true
@@ -93,6 +93,7 @@ flutter:
   assets:
     - assets/app/
     - assets/icons/
+    - assets/imgs/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

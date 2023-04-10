@@ -44,6 +44,7 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
                   minLines: 1,
                   maxLines: 4,
                   decoration: const InputDecoration(
+                      border: InputBorder.none,
                       hintText: "Sua dúvida",
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 12)),

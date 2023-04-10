@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
@@ -70,10 +71,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 50, bottom: 20),
-                          child: _labelTextInput(
-                              "Email", "seunome@examplo.com", false),
+                          child: _labelTextInput("Email", false, Icons.mail),
                         ),
-                        _labelTextInput("Senha", "suasenha", true),
+                        _labelTextInput("Senha", true, Icons.password),
                         Padding(
                           padding: const EdgeInsets.only(top: 80.0, bottom: 15),
                           child: _loginBtn(context),
@@ -90,29 +90,15 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-Widget _signUpLabel(String label, Color textColor) {
-  return Text(
-    label,
-    style: GoogleFonts.josefinSans(
-      textStyle: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.w800,
-        fontSize: 16,
-      ),
-    ),
-  );
-}
-
 Widget _loginBtn(BuildContext context) {
   return Container(
     width: double.infinity,
-    height: 60,
     decoration: const BoxDecoration(
       gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: ThemeColors.headerGradient),
-      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderRadius: BorderRadius.all(Radius.circular(50)),
     ),
     child: TextButton(
       onPressed: () {
@@ -123,7 +109,6 @@ Widget _loginBtn(BuildContext context) {
         style: GoogleFonts.josefinSans(
           textStyle: const TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w800,
             fontSize: 24,
           ),
         ),
@@ -135,9 +120,8 @@ Widget _loginBtn(BuildContext context) {
 Widget _registerBtn(BuildContext context) {
   return Container(
     width: double.infinity,
-    height: 60,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderRadius: BorderRadius.all(Radius.circular(50)),
       border: Border.all(width: 2, color: Colors.white),
     ),
     child: TextButton(
@@ -149,7 +133,6 @@ Widget _registerBtn(BuildContext context) {
         style: GoogleFonts.josefinSans(
           textStyle: const TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w800,
             fontSize: 24,
           ),
         ),
@@ -158,34 +141,26 @@ Widget _registerBtn(BuildContext context) {
   );
 }
 
-Widget _labelTextInput(String label, String hintText, bool isPassword) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+Widget _labelTextInput(String hintText, bool isPassword, IconData icon) {
+  return Row(
     children: [
-      Text(
-        label,
-        style: GoogleFonts.josefinSans(
-          textStyle: const TextStyle(
-            color: Color(0xff8fa1b6),
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-      ),
-      TextField(
-        obscureText: isPassword,
-        cursorColor: Colors.red,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: GoogleFonts.josefinSans(
-            textStyle: const TextStyle(
-              color: Color(0xffc5d2e1),
-              fontWeight: FontWeight.w400,
-              fontSize: 20,
+      Icon(icon, color: Colors.grey),
+      Container(
+        width: 250,
+        child: TextField(
+          obscureText: isPassword,
+          cursorColor: Colors.white,
+          style: TextStyle(),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
+            hintText: hintText,
+            hintStyle: GoogleFonts.josefinSans(
+              textStyle: const TextStyle(
+                color: Color(0xffc5d2e1),
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+              ),
             ),
-          ),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffdfe8f3)),
           ),
         ),
       ),
@@ -195,14 +170,14 @@ Widget _labelTextInput(String label, String hintText, bool isPassword) {
 
 Widget _iconsLogin() {
   return Container(
-    child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Image.asset(
         "assets/icons/google.png",
-        width: 50,
+        width: 40,
       ),
       Image.asset(
         "assets/icons/facebook.png",
-        width: 50,
+        width: 40,
       )
     ]),
   );
