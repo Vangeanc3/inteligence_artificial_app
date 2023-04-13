@@ -19,9 +19,9 @@ class WelcomeScreen extends StatelessWidget {
                   // Color.fromRGBO(103, 99, 234, 1.0),
                   // Color.fromRGBO(195, 107, 255, 1.0),
                 ],
-                begin: Alignment.topLeft,
+                begin: Alignment.topCenter,
                 end: Alignment.bottomRight,
-                stops: [0.0, 0.8],
+                stops: [0.0, 0.66],
                 tileMode: TileMode.clamp)),
         child: Center(
           child: Column(
@@ -45,7 +45,7 @@ class WelcomeScreen extends StatelessWidget {
                       child: Center(
                         child: Column(
                           children: [
-                            Image.asset("assets/app/icon-android.png",
+                            Image.asset("assets/app/logo_melhorada_branca.png",
                                 width: 200),
                             Text(
                               "IA Assistente",

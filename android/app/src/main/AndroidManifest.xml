@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.inteligence_artificial_app">
    <application
-        android:label="Inteligência Artificial Assistente"
+        android:label="IA Assistente"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

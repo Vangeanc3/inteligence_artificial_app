@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
@@ -64,9 +63,8 @@ class LoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 60, bottom: 0),
                           child: _logo(),
                         ),
-                        _loginLabel(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 50),
+                          padding: const EdgeInsets.only(top: 0),
                           child: _iconsLogin(),
                         ),
                         Padding(
@@ -183,27 +181,12 @@ Widget _iconsLogin() {
   );
 }
 
-Widget _loginLabel() {
-  return Center(
-    child: Text(
-      "IA-Assistente",
-      style: GoogleFonts.josefinSans(
-        textStyle: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w400,
-          fontSize: 34,
-        ),
-      ),
-    ),
-  );
-}
-
 Widget _logo() {
   return Center(
     child: SizedBox(
       child: Image.asset(
-        "assets/app/icon-android.png",
-        width: 120,
+        "assets/app/logo_melhorada_branca.png",
+        width: 200,
       ),
     ),
   );

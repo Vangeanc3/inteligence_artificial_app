@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -40,36 +40,39 @@ dependencies:
   http_interceptor: ^1.0.2
   logger: ^1.1.0
   connectivity_plus: ^3.0.3
-  flutter_native_splash: ^2.2.19
-  flutter_launcher_icons: ^0.12.0
   google_fonts: ^4.0.3
   dart_openai: ^1.9.1
   page_transition: ^2.0.9
+  video_player: ^2.6.1
+  sqflite: ^2.2.6
 
-flutter_native_splash:
-  color: "#ffffff"
-  image: "assets/app/splash.png"
-  android: true
-  ios: true
-  
-# flutter_icons:
-#   image_path: "assets/app/icon.png"
-#   ios: true
-#   remove_alpha_ios: true
-#   android_alpha_icon: "launcher_icon"
-#   adptative_icon_background: "#ffffff"
-#   adptative_icon_foreground: "assets/app/icon-android.png"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-flutter_icons:
-  android: "launcher_icon"
-  image_path_android: "assets/app/icon-android.png"
+  # flutter_native_splash: ^2.2.15
+  flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.19
+
+flutter_native_splash:
+  color: "#000000"
+  image: "assets/app/logo_preto.png"
+  android: true
   ios: true
-  image_path: "assets/app/icon.png"
+  fullscreen: true
+  background_image: "assets/imgs/fundo.png"
+
+
+
+flutter_icons:
+  image_path: "assets/app/logo_preto.png"
+  android: "launcher_icon"
   min_sdk_android: 21
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/app/logo_preto_azul.jpg"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

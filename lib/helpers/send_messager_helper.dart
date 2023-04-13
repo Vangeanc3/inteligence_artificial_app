@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 enviaMensagem(String mensagem, BuildContext context) async {
   // MENSAGEM ENVIADA PELO USUÁRIO
   Provider.of<Mensagens>(context, listen: false).addMensagem({
+    
+
     "text": BoxCard(
       widget: Text(mensagem),
       color: ThemeColors.msgSendColor,
