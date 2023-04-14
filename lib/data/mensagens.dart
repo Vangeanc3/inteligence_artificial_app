@@ -14,4 +14,8 @@ class Mensagens extends ChangeNotifier {
     mensagens.removeWhere((elemento) => elemento["loading"] == true);
     notifyListeners();
   }
+
+  void limpaMsgs() {
+    mensagens.clear();
+  }
 }

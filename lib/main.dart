@@ -1,9 +1,7 @@
 import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/components/box_card.dart';
-import 'package:inteligence_artificial_app/data/database.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
-import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
 import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/welcome_screen.dart';

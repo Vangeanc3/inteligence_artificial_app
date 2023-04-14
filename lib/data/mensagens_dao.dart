@@ -13,16 +13,28 @@ class MensagensDao {
       'mensagens_id INTEGER,'
       'FOREIGN KEY (mensagens_id) REFERENCES mensagens(id))';
 
-  addMsg(Map<String, dynamic> mensagem) async {
+  Future<Map<String, dynamic>> criarMensagens() async {
     final Database db = await getDatabase();
 
     var idMsg = await db.insert('mensagens', {'nome': 'Nova mensagem'});
+
+    var resultado = await db.query('mensagens', where: 'id = ?', whereArgs: [idMsg], limit: 1);
+
+    if (resultado.isNotEmpty) {
+    return resultado.first;
+  } else {
+    throw Exception;
+  }
+  }
+
+  addMsg(Map<String, dynamic> mensagem, int id) async {
+    final Database db = await getDatabase();
 
     await db.insert('mensagens_chat', {
       'texto': mensagem["text"],
       'receveid': mensagem["receveid"],
       'loading': mensagem["loading"],
-      'mensagens_id': idMsg
+      'mensagens_id': id
     });
   }
 

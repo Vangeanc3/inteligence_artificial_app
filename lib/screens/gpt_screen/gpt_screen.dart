@@ -16,6 +16,13 @@ class _GptScreenState extends State<GptScreen> {
   void initState() {
     super.initState();
     verifyConnection(context);
+    // Chamar a função que inicializa o banco de dados ao entrar na tela do chat
+  }
+
+   @override
+  void dispose() {
+    // Limpa a lista quando o widget é descartado
+    super.dispose();
   }
 
   @override
