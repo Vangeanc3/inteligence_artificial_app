@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/helpers/verify_connection.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:inteligence_artificial_app/components/input_box_message.dart';
+import 'package:provider/provider.dart';
 
 class GptScreen extends StatefulWidget {
   const GptScreen({super.key});
@@ -12,14 +15,20 @@ class GptScreen extends StatefulWidget {
 }
 
 class _GptScreenState extends State<GptScreen> {
+  late Map<String, dynamic> mensagens;
+
   @override
   void initState() {
     super.initState();
     verifyConnection(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      limpaMsgs(context);
+      addMsgInicial(context);
+    });
     // Chamar a função que inicializa o banco de dados ao entrar na tela do chat
   }
 
-   @override
+  @override
   void dispose() {
     // Limpa a lista quando o widget é descartado
     super.dispose();
@@ -39,7 +48,14 @@ class _GptScreenState extends State<GptScreen> {
               leading: const Icon(Icons.home),
               title: const Text("Home"),
               onTap: () {},
-            )
+            ),
+            Expanded(child: Container()),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, "/");
+              },
+            ),
           ],
         ),
       ),
@@ -48,11 +64,12 @@ class _GptScreenState extends State<GptScreen> {
         title: const Text("Mobile GPT"),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.add, size: 30)),
-          ),
+          IconButton(
+              onPressed: () {
+                limpaMsgs(context);
+                addMsgInicial(context);
+              },
+              icon: const Icon(Icons.add, size: 30)),
         ],
       ),
       body: Stack(
@@ -68,12 +85,43 @@ class _GptScreenState extends State<GptScreen> {
               child: Container(
                 decoration: const BoxDecoration(color: ThemeColors.temaWhats2),
                 padding: const EdgeInsets.only(bottom: 5, left: 5, top: 5),
-                child: const InputBoxMessage(),
+                child: FutureBuilder( // O FUTURE É USADO, POIS ESTAMOS PASSANDO UM VALOR QUE É DO FUTURO O ID!!!
+                  future: fetchData(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return InputBoxMessage(id: snapshot.data["id"]);
+                    } else if (snapshot.hasError) {
+                      return Text('Erro: ${snapshot.error}');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
               ),
             ),
           )
         ],
       ),
     );
+  }
+
+  void addMsgInicial(BuildContext context) {
+    Provider.of<Mensagens>(context, listen: false).addMensagem({
+      "text": "Olá, em que posso ajuda-lo",
+      "receveid": true,
+      "loading": false
+    });
+  }
+
+  void limpaMsgs(BuildContext context) {
+    Provider.of<Mensagens>(context, listen: false).limpaMsgs();
+  }
+
+  Future<Map> fetchData() async {
+    mensagens = await MensagensDao()
+        .criarMensagens(); // Sempre vai gerar uma nova mensagem no banco de dados
+    print("Dados recebidos $mensagens");
+
+    return mensagens;
   }
 }

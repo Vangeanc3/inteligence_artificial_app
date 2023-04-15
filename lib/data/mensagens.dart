@@ -17,5 +17,6 @@ class Mensagens extends ChangeNotifier {
 
   void limpaMsgs() {
     mensagens.clear();
+    notifyListeners();
   }
 }

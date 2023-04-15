@@ -6,8 +6,9 @@ import 'package:inteligence_artificial_app/helpers/send_messager_helper.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class InputBoxMessage extends StatefulWidget {
+  final int? id;
   const InputBoxMessage({
-    super.key,
+    super.key, required this.id
   });
 
   @override
@@ -62,7 +63,7 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
                   icon: const Icon(Icons.send_rounded),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      enviaMensagem(msgController.text, context);
+                      enviaMensagem(msgController.text, context, widget.id);
                       msgController.clear();
                     }
                   },

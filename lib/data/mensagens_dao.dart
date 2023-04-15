@@ -18,13 +18,18 @@ class MensagensDao {
 
     var idMsg = await db.insert('mensagens', {'nome': 'Nova mensagem'});
 
-    var resultado = await db.query('mensagens', where: 'id = ?', whereArgs: [idMsg], limit: 1);
+    print(idMsg);
+    var resultado = await db.query('mensagens',
+        where: 'id = ?', whereArgs: [idMsg], limit: 1);
+
+    print(resultado.first);
+    print(resultado.first["id"]);
 
     if (resultado.isNotEmpty) {
-    return resultado.first;
-  } else {
-    throw Exception;
-  }
+      return resultado.first;
+    } else {
+      throw Exception;
+    }
   }
 
   addMsg(Map<String, dynamic> mensagem, int id) async {

@@ -8,17 +8,10 @@ import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
-enviaMensagem(String mensagem, BuildContext context) async {
+enviaMensagem(String mensagem, BuildContext context, int? id) async {
   // MENSAGEM ENVIADA PELO USUÁRIO
-  Provider.of<Mensagens>(context, listen: false).addMensagem({
-    
-
-    "text": BoxCard(
-      widget: Text(mensagem),
-      color: ThemeColors.msgSendColor,
-    ),
-    "receveid": false,
-  });
+  Provider.of<Mensagens>(context, listen: false)
+      .addMensagem({"text": mensagem, "receveid": false, "loading": false});
 
   // WIDGET DE LOADING ENQUANTO A MENSAGEM CHEGA
   Provider.of<Mensagens>(context, listen: false).addMensagem({
@@ -55,7 +48,8 @@ enviaMensagem(String mensagem, BuildContext context) async {
               "Erro ao tentar se comunicar com a inteligência artificial, tente enviar uma mensagem para o administrador. "
               "Pois, precisamos corrigir esse erro imediatamente."),
         ),
-        "receveid": true
+        "receveid": true,
+        "loading": true // PARA APARECER COMO WIDGET PERSONALIZADO NA COR RED
       });
       break;
     default:
@@ -67,9 +61,9 @@ enviaMensagem(String mensagem, BuildContext context) async {
         const Duration(milliseconds: 50),
         () {
           Provider.of<Mensagens>(context, listen: false).addMensagem({
-            "text": BoxCard(
-                widget: Text(chatCompletion.choices[0].message.content)),
-            "receveid": true
+            "text": chatCompletion.choices[0].message.content,
+            "receveid": true,
+            "loading": false
           });
         },
       );

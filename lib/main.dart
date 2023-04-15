@@ -19,10 +19,7 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => Mensagens(mensagens: [
-        {
-          "text": const BoxCard(widget: Text("Olá, em que posso ajuda-lo")),
-          "receveid": true,
-        }
+       
       ]),
     )
   ], child: const MyApp()));
