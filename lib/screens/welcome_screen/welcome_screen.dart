@@ -49,7 +49,8 @@ class WelcomeScreen extends StatelessWidget {
                                 width: 200),
                             Text(
                               "IA Assistente",
-                              style: Theme.of(context).textTheme.bodyLarge,
+                              style: TextStyle(
+                                  fontSize: 28, fontWeight: FontWeight.w600),
                             )
                           ],
                         ),

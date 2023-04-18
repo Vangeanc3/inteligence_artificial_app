@@ -10,6 +10,10 @@ class Mensagens extends ChangeNotifier {
     notifyListeners();
   }
 
+  int retornaQuant() {
+    return mensagens.length;
+  }
+
   void removeLoading() {
     mensagens.removeWhere((elemento) => elemento["loading"] == true);
     notifyListeners();

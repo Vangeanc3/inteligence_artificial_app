@@ -1,15 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/helpers/form_validator_helper.dart';
 import 'package:inteligence_artificial_app/helpers/send_messager_helper.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
+import 'package:provider/provider.dart';
 
 class InputBoxMessage extends StatefulWidget {
-  final int? id;
-  const InputBoxMessage({
-    super.key, required this.id
-  });
+  final Function(Map<String, dynamic>) callBack;
+
+  const InputBoxMessage({super.key, required this.callBack});
 
   @override
   State<InputBoxMessage> createState() => _InputBoxMessageState();
@@ -18,6 +20,7 @@ class InputBoxMessage extends StatefulWidget {
 class _InputBoxMessageState extends State<InputBoxMessage> {
   var msgController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late Map<String, dynamic> mensagens;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,15 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
                   icon: const Icon(Icons.send_rounded),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      enviaMensagem(msgController.text, context, widget.id);
+                      final quant =
+                          Provider.of<Mensagens>(context, listen: false)
+                              .retornaQuant();
+                      if (quant == 1) {
+                        mensagens = await MensagensDao().criarMensagens();
+                        widget.callBack(mensagens);
+                      }
+                      enviaMensagem(
+                          msgController.text, context, mensagens["id"]);
                       msgController.clear();
                     }
                   },

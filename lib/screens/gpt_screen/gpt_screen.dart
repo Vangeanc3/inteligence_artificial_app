@@ -41,15 +41,26 @@ class _GptScreenState extends State<GptScreen> {
         child: Column(
           children: [
             const UserAccountsDrawerHeader(
-                currentAccountPicture: Icon(Icons.account_circle, size: 50),
-                accountName: Text("Ismael Martins"),
-                accountEmail: Text("ismaelmartins919@gmail.com")),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Home"),
-              onTap: () {},
+              currentAccountPicture: Icon(Icons.account_circle, size: 50),
+              accountName: Text("Ismael Martins"),
+              accountEmail: Text("ismaelmartins919@gmail.com"),
             ),
-            Expanded(child: Container()),
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                    return ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text("home"),
+                      onTap: () {
+                        retornaNomes();
+                      },
+                    );
+                  }, childCount: 4)),
+                ],
+              ),
+            ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
               onTap: () {
@@ -83,21 +94,14 @@ class _GptScreenState extends State<GptScreen> {
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 70, maxHeight: 150),
               child: Container(
-                decoration: const BoxDecoration(color: ThemeColors.temaWhats2),
-                padding: const EdgeInsets.only(bottom: 5, left: 5, top: 5),
-                child: FutureBuilder( // O FUTURE É USADO, POIS ESTAMOS PASSANDO UM VALOR QUE É DO FUTURO O ID!!!
-                  future: fetchData(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return InputBoxMessage(id: snapshot.data["id"]);
-                    } else if (snapshot.hasError) {
-                      return Text('Erro: ${snapshot.error}');
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  },
-                ),
-              ),
+                  decoration:
+                      const BoxDecoration(color: ThemeColors.temaWhats2),
+                  padding: const EdgeInsets.only(bottom: 5, left: 5, top: 5),
+                  child: InputBoxMessage(
+                    callBack: (data) {
+                      mensagens = data;
+                    },
+                  )),
             ),
           )
         ],
@@ -113,15 +117,13 @@ class _GptScreenState extends State<GptScreen> {
     });
   }
 
-  void limpaMsgs(BuildContext context) {
-    Provider.of<Mensagens>(context, listen: false).limpaMsgs();
+  void retornaNomes() async {
+    // var titulos = await MensagensDao().procurarMensagemTitle();
+    var titulos = await MensagensDao().procurarMensagem();
+    print(titulos);
   }
 
-  Future<Map> fetchData() async {
-    mensagens = await MensagensDao()
-        .criarMensagens(); // Sempre vai gerar uma nova mensagem no banco de dados
-    print("Dados recebidos $mensagens");
-
-    return mensagens;
+  void limpaMsgs(BuildContext context) {
+    Provider.of<Mensagens>(context, listen: false).limpaMsgs();
   }
 }

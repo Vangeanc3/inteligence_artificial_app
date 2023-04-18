@@ -5,10 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/components/box_card.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
 enviaMensagem(String mensagem, BuildContext context, int? id) async {
+  print(id);
+  // MENSAGEM ENVIADA PELO USUARIO ARMAZENADA NO DISPOSITIVO
+  if (id == null) {
+    await MensagensDao()
+        .addMsg({"text": mensagem, "receveid": false, "loading": false}, id!);
+  }
+
   // MENSAGEM ENVIADA PELO USUÁRIO
   Provider.of<Mensagens>(context, listen: false)
       .addMensagem({"text": mensagem, "receveid": false, "loading": false});
@@ -53,6 +61,12 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
       });
       break;
     default:
+      await MensagensDao().addMsg({
+        "text": chatCompletion.choices[0].message.content,
+        "receveid": true,
+        "loading": false
+      }, id);
+
       Provider.of<Mensagens>(context, listen: false)
           .removeLoading(); // FUNÇÃO QUE REMOVE O LOADING
 

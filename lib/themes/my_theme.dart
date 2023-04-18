@@ -13,8 +13,7 @@ ThemeData myTheme = ThemeData(
       fontSize: 16,
     ),
     bodyLarge: TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
+      fontSize: 20,
     ),
   ),
 );
