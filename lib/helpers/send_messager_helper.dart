@@ -12,18 +12,18 @@ import 'package:provider/provider.dart';
 enviaMensagem(String mensagem, BuildContext context, int? id) async {
   print(id);
   // MENSAGEM ENVIADA PELO USUARIO ARMAZENADA NO DISPOSITIVO
-  if (id == null) {
+  if (id != null) {
     await MensagensDao()
-        .addMsg({"text": mensagem, "receveid": false, "loading": false}, id!);
+        .addMsg({"texto": mensagem, "receveid": false, "loading": false}, id);
   }
 
   // MENSAGEM ENVIADA PELO USUÁRIO
   Provider.of<Mensagens>(context, listen: false)
-      .addMensagem({"text": mensagem, "receveid": false, "loading": false});
+      .addMensagem({"texto": mensagem, "receveid": false, "loading": false});
 
   // WIDGET DE LOADING ENQUANTO A MENSAGEM CHEGA
   Provider.of<Mensagens>(context, listen: false).addMensagem({
-    "text": BoxCard(
+    "texto": BoxCard(
         widget: ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 70),
       child: SpinKitThreeBounce(
@@ -50,7 +50,7 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
     case "erro ao se comunicar com o servidor":
       Provider.of<Mensagens>(context, listen: false).removeLoading();
       Provider.of<Mensagens>(context, listen: false).addMensagem({
-        "text": const BoxCard(
+        "texto": const BoxCard(
           color: ThemeColors.erroColor,
           widget: Text(
               "Erro ao tentar se comunicar com a inteligência artificial, tente enviar uma mensagem para o administrador. "
@@ -62,10 +62,10 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
       break;
     default:
       await MensagensDao().addMsg({
-        "text": chatCompletion.choices[0].message.content,
+        "texto": chatCompletion.choices[0].message.content,
         "receveid": true,
         "loading": false
-      }, id);
+      }, id!);
 
       Provider.of<Mensagens>(context, listen: false)
           .removeLoading(); // FUNÇÃO QUE REMOVE O LOADING
@@ -75,7 +75,7 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
         const Duration(milliseconds: 50),
         () {
           Provider.of<Mensagens>(context, listen: false).addMensagem({
-            "text": chatCompletion.choices[0].message.content,
+            "texto": chatCompletion.choices[0].message.content,
             "receveid": true,
             "loading": false
           });

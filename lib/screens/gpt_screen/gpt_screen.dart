@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/helpers/verify_connection.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
@@ -24,6 +25,7 @@ class _GptScreenState extends State<GptScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       limpaMsgs(context);
       addMsgInicial(context);
+      callBackTitulos(context);
     });
     // Chamar a função que inicializa o banco de dados ao entrar na tela do chat
   }
@@ -45,22 +47,25 @@ class _GptScreenState extends State<GptScreen> {
               accountName: Text("Ismael Martins"),
               accountEmail: Text("ismaelmartins919@gmail.com"),
             ),
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                    return ListTile(
-                      leading: Icon(Icons.home),
-                      title: Text("home"),
-                      onTap: () {
-                        retornaNomes();
-                      },
-                    );
-                  }, childCount: 4)),
-                ],
-              ),
-            ),
+            Expanded(child: Consumer<MensagensTitulo>(
+              builder: (context, lista, child) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text(lista.mensagensTitulo[index]["nome"]),
+                        onTap: () {
+                          retornaMensagens(
+                              lista.mensagensTitulo[index]["id"], context);
+                        },
+                      );
+                    }, childCount: lista.mensagensTitulo.length)),
+                  ],
+                );
+              },
+            )),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
               onTap: () {
@@ -111,16 +116,23 @@ class _GptScreenState extends State<GptScreen> {
 
   void addMsgInicial(BuildContext context) {
     Provider.of<Mensagens>(context, listen: false).addMensagem({
-      "text": "Olá, em que posso ajuda-lo",
+      "texto": "Olá, em que posso ajuda-lo",
       "receveid": true,
       "loading": false
     });
   }
 
-  void retornaNomes() async {
-    // var titulos = await MensagensDao().procurarMensagemTitle();
-    var titulos = await MensagensDao().procurarMensagem();
-    print(titulos);
+  void callBackTitulos(BuildContext context) async {
+    Provider.of<MensagensTitulo>(context, listen: false).limpaLista();
+    Provider.of<MensagensTitulo>(context, listen: false).iniciaLista();
+  }
+
+  void retornaMensagens(int id, BuildContext context) async {
+    final mensagens = await MensagensDao().procurarMensagem(id);
+
+
+    Provider.of<Mensagens>(context, listen: false)
+        .substituirMensagens(mensagens);
   }
 
   void limpaMsgs(BuildContext context) {

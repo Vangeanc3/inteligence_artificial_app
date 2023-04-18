@@ -14,6 +14,12 @@ class Mensagens extends ChangeNotifier {
     return mensagens.length;
   }
 
+  void substituirMensagens(List<Map<String, dynamic>> mensagens) {
+    this.mensagens.clear();
+    this.mensagens.addAll(mensagens);
+    notifyListeners();
+  }
+
   void removeLoading() {
     mensagens.removeWhere((elemento) => elemento["loading"] == true);
     notifyListeners();

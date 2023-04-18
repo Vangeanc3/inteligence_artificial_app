@@ -32,12 +32,12 @@ class _BodyMessagesState extends State<BodyMessages> {
                       right: (list.mensagens[index]["receveid"]) ? 50 : 0,
                     ),
                     child: (list.mensagens[index]["loading"])
-                        ? list.mensagens[index]["text"]
+                        ? list.mensagens[index]["texto"]
                         : BoxCard(
                             color: (list.mensagens[index]["receveid"])
                                 ? null
                                 : ThemeColors.msgSendColor,
-                            widget: Text(list.mensagens[index]["text"]),
+                            widget: Text(list.mensagens[index]["texto"]),
                           ),
                   ),
                 );

@@ -14,7 +14,7 @@ void verifyConnection(BuildContext context) async {
       }
     } on SocketException catch (_) {
       Provider.of<Mensagens>(context, listen: false).addMensagem({
-        "text": const BoxCard(color: ThemeColors.erroColor, widget: Text("Sem conexão com a internet")),
+        "texto": const BoxCard(color: ThemeColors.erroColor, widget: Text("Sem conexão com a internet")),
         "receveid": true
       });
       print('not connected');

@@ -1,7 +1,7 @@
 import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/components/box_card.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
 import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/welcome_screen.dart';
@@ -18,10 +18,8 @@ void main() {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-      create: (context) => Mensagens(mensagens: [
-       
-      ]),
-    )
+        create: (context) => MensagensTitulo(mensagensTitulo: [])),
+    ChangeNotifierProvider(create: (context) => Mensagens(mensagens: [])),
   ], child: const MyApp()));
 }
 
@@ -46,17 +44,17 @@ class MyApp extends StatelessWidget {
             return PageTransition(
                 child: WelcomeScreen(),
                 type: PageTransitionType.bottomToTop,
-                duration: const Duration(milliseconds: 500));
+                duration: const Duration(milliseconds: 300));
           case "/login":
             return PageTransition(
                 child: LoginScreen(),
                 type: PageTransitionType.bottomToTop,
-                duration: const Duration(milliseconds: 500));
+                duration: const Duration(milliseconds: 300));
           case "/gpt":
             return PageTransition(
                 child: GptScreen(),
                 type: PageTransitionType.bottomToTop,
-                duration: const Duration(milliseconds: 500));
+                duration: const Duration(milliseconds: 300));
           default:
             return null;
         }

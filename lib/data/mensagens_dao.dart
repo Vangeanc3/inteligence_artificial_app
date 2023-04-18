@@ -36,7 +36,7 @@ class MensagensDao {
     final Database db = await getDatabase();
 
     await db.insert('mensagens_chat', {
-      'texto': mensagem["text"],
+      'texto': mensagem["texto"],
       'receveid': mensagem["receveid"],
       'loading': mensagem["loading"],
       'mensagens_id': id
@@ -46,21 +46,36 @@ class MensagensDao {
   procurarMensagemTitle() async {
     final Database db = await getDatabase();
 
-    final query = 'SELECT nome FROM mensagens';
+    final String query = 'SELECT * FROM mensagens';
 
-    final nomes = await db.rawQuery(query);
+    final List<Map<String, dynamic>> mensagens = await db.rawQuery(query);
 
-    return nomes;
+    return mensagens;
   }
 
-  Future<List<Map>> procurarMensagem() async {
+  Future<List<Map<String, dynamic>>> procurarMensagem(int id) async {
     final Database db = await getDatabase();
 
-    final query = 'SELECT mensagens_chat.texto, mensagens_chat.receveid, mensagens_chat.loading FROM mensagens_chat '
-        'JOIN mensagens ON mensagens_chat.mensagens_id = mensagens.id';
+    final query =
+        'SELECT mensagens_chat.texto, mensagens_chat.receveid, mensagens_chat.loading FROM mensagens_chat '
+        'JOIN mensagens ON mensagens_chat.mensagens_id = mensagens.id '
+        'WHERE mensagens_chat.mensagens_id = $id';
 
-    final resultado = await db.rawQuery(query);
+    List<Map<String, dynamic>> listaMutavelResultado = [];
+    List<Map<String, dynamic>> resultado = await db.rawQuery(query);
 
-    return resultado;
+    for (var map in resultado) {
+      var mutavelMap = Map<String, dynamic>.from(map);
+      mutavelMap.update("receveid", (value) => value == 1 ? true : false);
+      mutavelMap.update("loading", (value) => value == 1 ? true : false);
+      listaMutavelResultado.add(mutavelMap);
+    }
+
+    // resultado.forEach((element) {
+    //   element.update("receveid", (value) => value == 1 ? true : false);
+    //   element.update("loading", (value) => value == 1 ? true : false);
+    // });
+
+    return listaMutavelResultado;
   }
 }
