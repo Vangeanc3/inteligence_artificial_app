@@ -16,11 +16,12 @@ class GptScreen extends StatefulWidget {
 }
 
 class _GptScreenState extends State<GptScreen> {
-  late Map<String, dynamic> mensagens;
+  var mensagens;
 
   @override
   void initState() {
     super.initState();
+    print("MENSAGEM:  $mensagens");
     verifyConnection(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       limpaMsgs(context);
@@ -104,7 +105,12 @@ class _GptScreenState extends State<GptScreen> {
                   padding: const EdgeInsets.only(bottom: 5, left: 5, top: 5),
                   child: InputBoxMessage(
                     callBack: (data) {
-                      mensagens = data;
+                      print(mensagens);
+                      if (mensagens == null) {
+                        mensagens = data;
+                      } else {
+                        return mensagens;
+                      }
                     },
                   )),
             ),
@@ -128,11 +134,10 @@ class _GptScreenState extends State<GptScreen> {
   }
 
   void retornaMensagens(int id, BuildContext context) async {
-    final mensagens = await MensagensDao().procurarMensagem(id);
+    mensagens = await MensagensDao().retornaMensagem(id);
+    final msgs = await MensagensDao().procurarMensagem(id);
 
-
-    Provider.of<Mensagens>(context, listen: false)
-        .substituirMensagens(mensagens);
+    Provider.of<Mensagens>(context, listen: false).substituirMensagens(msgs);
   }
 
   void limpaMsgs(BuildContext context) {

@@ -9,7 +9,7 @@ import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
 class InputBoxMessage extends StatefulWidget {
-  final Function(Map<String, dynamic>)
+  final Function(Map<String, dynamic>?)
       callBack; // CALL BACK PARA PASSAR OS DADOS PARA O WIDGET PAI
 
   const InputBoxMessage({super.key, required this.callBack});
@@ -21,8 +21,7 @@ class InputBoxMessage extends StatefulWidget {
 class _InputBoxMessageState extends State<InputBoxMessage> {
   var msgController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late Map<String, dynamic>
-      mensagens; // LATE, POIS ELA SERÁ ATRIBUIDA, ASSIM QUE O USUÁRIO ENVIAR UMA MSG
+  var mensagens; // LATE, POIS ELA SERÁ ATRIBUIDA, ASSIM QUE O USUÁRIO ENVIAR UMA MSG
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +75,9 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
                         // CONDIÇÃO QUE VERIFICA SE TEM MENSAGENS, ELE SÓ VAI CRIAR SE A QUANTIDADE DE MENSAGENS FOR IGUAL A 1
                         mensagens = await MensagensDao().criarMensagens();
                         widget.callBack(mensagens);
+                      } else if (quant >= 2) {
+                        mensagens = widget.callBack(mensagens);
+                        print("mensagens parametro $mensagens");
                       }
 
                       enviaMensagem(

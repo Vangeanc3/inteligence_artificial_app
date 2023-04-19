@@ -10,6 +10,11 @@ class Mensagens extends ChangeNotifier {
     notifyListeners();
   }
 
+  int retornaId() {
+    final id = mensagens.last["mensagens_id"];
+    return id;
+  }
+
   int retornaQuant() {
     return mensagens.length;
   }

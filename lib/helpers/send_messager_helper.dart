@@ -61,11 +61,13 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
       });
       break;
     default:
-      await MensagensDao().addMsg({
-        "texto": chatCompletion.choices[0].message.content,
-        "receveid": true,
-        "loading": false
-      }, id!);
+      if (id != null) {
+        await MensagensDao().addMsg({
+          "texto": chatCompletion.choices[0].message.content,
+          "receveid": true,
+          "loading": false
+        }, id);
+      }
 
       Provider.of<Mensagens>(context, listen: false)
           .removeLoading(); // FUNÇÃO QUE REMOVE O LOADING

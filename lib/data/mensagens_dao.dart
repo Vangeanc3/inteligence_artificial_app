@@ -32,6 +32,18 @@ class MensagensDao {
     }
   }
 
+  Future<Map<String, dynamic>> retornaMensagem(int id) async {
+    final Database db = await getDatabase();
+    final resultado =
+        await db.query('mensagens', where: 'id = ?', whereArgs: [id], limit: 1);
+
+    if (resultado.isNotEmpty) {
+      return resultado.first;
+    } else {
+      throw Exception();
+    }
+  }
+
   addMsg(Map<String, dynamic> mensagem, int id) async {
     final Database db = await getDatabase();
 
@@ -57,7 +69,7 @@ class MensagensDao {
     final Database db = await getDatabase();
 
     final query =
-        'SELECT mensagens_chat.texto, mensagens_chat.receveid, mensagens_chat.loading FROM mensagens_chat '
+        'SELECT mensagens_chat.texto, mensagens_chat.receveid, mensagens_chat.loading, mensagens_chat.mensagens_id FROM mensagens_chat '
         'JOIN mensagens ON mensagens_chat.mensagens_id = mensagens.id '
         'WHERE mensagens_chat.mensagens_id = $id';
 
@@ -70,11 +82,6 @@ class MensagensDao {
       mutavelMap.update("loading", (value) => value == 1 ? true : false);
       listaMutavelResultado.add(mutavelMap);
     }
-
-    // resultado.forEach((element) {
-    //   element.update("receveid", (value) => value == 1 ? true : false);
-    //   element.update("loading", (value) => value == 1 ? true : false);
-    // });
 
     return listaMutavelResultado;
   }
