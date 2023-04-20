@@ -35,16 +35,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/splash",
       routes: {
-        "/splash": (context) => const SplashScreen()
+        "/welcome": (context) => const WelcomeScreen(),
+        "/splash": (context) => const SplashScreen(),
+
         // "/gpt": (context) => const GptScreen(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case "/":
-            return PageTransition(
-                child: WelcomeScreen(),
-                type: PageTransitionType.bottomToTop,
-                duration: const Duration(milliseconds: 300));
           case "/login":
             return PageTransition(
                 child: LoginScreen(),

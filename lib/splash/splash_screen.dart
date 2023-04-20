@@ -21,18 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
       })
       ..setVolume(0.0);
 
-    _playVideo();
-  }
-
-  void _playVideo() async {
-    // INICIANDO O VIDEO
-    _controller.play();
-
-    // ADD O DELAY PARA INICIAR O VIDEO COMPLETO
-    await Future.delayed(const Duration(seconds: 3));
-
-    //  NAVEGANDO PARA A TELA INICIAL
-    Navigator.pushReplacementNamed(context, "/");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _playVideo(context);
+    });
   }
 
   @override
@@ -55,5 +46,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 )
               : Container(),
         ));
+  }
+
+  void _playVideo(BuildContext context) async {
+    // INICIANDO O VIDEO
+    _controller.play();
+
+    // ADD O DELAY PARA INICIAR O VIDEO COMPLETO
+    await Future.delayed(const Duration(seconds: 3));
+
+    //  NAVEGANDO PARA A TELA INICIAL
+    Navigator.pushReplacementNamed(context, "/welcome");
   }
 }

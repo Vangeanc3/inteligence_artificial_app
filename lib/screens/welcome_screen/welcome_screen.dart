@@ -73,16 +73,14 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, "/login");
+                      Navigator.pushNamed(context, "/login");
                     },
                     child: Text(
                       "Entrar",
-                      style: GoogleFonts.josefinSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 22,
-                        ),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 22,
                       ),
                     ),
                   ),
@@ -95,3 +93,11 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
+
+// GoogleFonts.josefinSans(
+//                         textStyle: const TextStyle(
+//                           color: Colors.white,
+//                           fontWeight: FontWeight.w800,
+//                           fontSize: 22,
+//                         ),
+//                       )

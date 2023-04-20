@@ -70,7 +70,7 @@ class _GptScreenState extends State<GptScreen> {
             ListTile(
               leading: const Icon(Icons.exit_to_app),
               onTap: () {
-                Navigator.pushReplacementNamed(context, "/");
+                Navigator.pushReplacementNamed(context, "/welcome");
               },
             ),
           ],

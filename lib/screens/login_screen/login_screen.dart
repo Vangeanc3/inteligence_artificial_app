@@ -10,6 +10,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+        ),
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: SizedBox(
@@ -59,10 +62,7 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 60, bottom: 0),
-                          child: _logo(),
-                        ),
+                        _logo(),
                         Padding(
                           padding: const EdgeInsets.only(top: 0),
                           child: _iconsLogin(),
@@ -104,11 +104,9 @@ Widget _loginBtn(BuildContext context) {
       },
       child: Text(
         "Login",
-        style: GoogleFonts.josefinSans(
-          textStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-          ),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 24,
         ),
       ),
     ),
@@ -128,11 +126,9 @@ Widget _registerBtn(BuildContext context) {
       },
       child: Text(
         "Criar Conta",
-        style: GoogleFonts.josefinSans(
-          textStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-          ),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 24,
         ),
       ),
     ),
@@ -152,12 +148,10 @@ Widget _labelTextInput(String hintText, bool isPassword, IconData icon) {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
             hintText: hintText,
-            hintStyle: GoogleFonts.josefinSans(
-              textStyle: const TextStyle(
-                color: Color(0xffc5d2e1),
-                fontWeight: FontWeight.w400,
-                fontSize: 16,
-              ),
+            hintStyle: const TextStyle(
+              color: Color(0xffc5d2e1),
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
             ),
           ),
         ),
