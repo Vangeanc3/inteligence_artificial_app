@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "475221928257",
+    "project_id": "inteligence-artificial-app",
+    "storage_bucket": "inteligence-artificial-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475221928257:android:19aa3090ecf4ec54a219c0",
+        "android_client_info": {
+          "package_name": "com.example.inteligence_artificial_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475221928257-qgi6p9qkdeo158rd73bo1irjvvnr949n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGFzkP7y5K1p-2G71xJGmQ-TX-Y8pZLvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475221928257-qgi6p9qkdeo158rd73bo1irjvvnr949n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

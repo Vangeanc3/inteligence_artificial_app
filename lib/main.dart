@@ -1,4 +1,5 @@
 import 'package:dart_openai/openai.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
@@ -10,8 +11,14 @@ import 'package:inteligence_artificial_app/themes/my_theme.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   OpenAI.apiKey = "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";
   OpenAI.organization = null;
