@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:inteligence_artificial_app/components/label_text_input.dart';
+import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -7,7 +9,10 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    var _emailController = TextEditingController();
+    var _senhaController = TextEditingController();
+    FirebaseAuth auth = FirebaseAuth.instance;
 
     return Scaffold(
       body: Container(
@@ -17,12 +22,7 @@ class WelcomeScreen extends StatelessWidget {
             gradient: LinearGradient(
                 colors: [
                   Colors.white,
-
                   Colors.black,
-
-                  // Color.fromRGBO(103, 99, 234, 1.0),
-
-                  // Color.fromRGBO(195, 107, 255, 1.0),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomRight,
@@ -65,19 +65,23 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(40, 150, 40, 0),
+                padding: EdgeInsets.fromLTRB(20, 150, 20, 10),
                 child: Container(
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: ThemeColors.headerGradient),
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
+                  height: 50,
+                  // decoration: BoxDecoration(
+                  //   gradient: LinearGradient(
+                  //       begin: Alignment.topCenter,
+                  //       end: Alignment.bottomCenter,
+                  //       colors: ThemeColors.headerGradient),
+                  //   borderRadius: BorderRadius.all(Radius.circular(50)),
+                  // ),
+                  child: LoginBtn(
+                    texto: "Entrar",
+                    context: context,
+                    icon: null,
+                    corTexto: Colors.white,
+                    cor: Colors.purple[900],
+                    funcao: () {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
@@ -88,14 +92,74 @@ class WelcomeScreen extends StatelessWidget {
                                   horizontal: 20, vertical: 10),
                               child: Column(
                                 children: [
-                                  _loginBtn(
-                                    context,
-                                    "Entrar com Email",
-                                    Colors.black,
-                                    Icon(Icons.email),
-                                    () {
-                                      
-                                      loginEmail(context);
+                                  LoginBtn(
+                                    context: context,
+                                    corTexto: Colors.white,
+                                    texto: "Entrar com Email",
+                                    cor: Colors.black,
+                                    icon: Icon(Icons.email),
+                                    funcao: () {
+                                      // SE FOR LOGAR COM EMAIL ABRE UM FORMULARIO MODAL
+                                      Navigator.pop(context);
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Form(
+                                            key: _formKey,
+                                            child: SizedBox(
+                                              height: 250,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20,
+                                                        vertical: 20),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 30),
+                                                      child: LabelTextInput(
+                                                          hintText: "Email",
+                                                          isPassword: false,
+                                                          icon: Icons.mail,
+                                                          controllerField:
+                                                              _emailController),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 20),
+                                                      child: LabelTextInput(
+                                                          hintText: "Senha",
+                                                          isPassword: false,
+                                                          icon: Icons.mail,
+                                                          controllerField:
+                                                              _senhaController),
+                                                    ),
+                                                    LoginBtn(
+                                                      context: context,
+                                                      texto: "Entrar",
+                                                      corTexto: Colors.white,
+                                                      cor: Colors.black,
+                                                      icon: Icon(Icons.send),
+                                                      funcao: () async {
+                                                        logarUsuarioEmailSenha(
+                                                            _formKey,
+                                                            _emailController,
+                                                            _senhaController,
+                                                            auth);
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
                                     },
                                   ),
                                   Padding(
@@ -103,25 +167,26 @@ class WelcomeScreen extends StatelessWidget {
                                         vertical: 10),
                                     child: Text("ou"),
                                   ),
-                                  _loginBtn(
-                                      context,
-                                      "Entrar com Google",
-                                      Colors.white,
-                                      Image.asset(
+                                  LoginBtn(
+                                      context: context,
+                                      texto: "Entrar com Google",
+                                      cor: Colors.white,
+                                      icon: Image.asset(
                                         "assets/icons/google.png",
                                         height: 20,
                                       ),
-                                      () {},
+                                      funcao: () {},
                                       corTexto: Colors.black),
-                                  _loginBtn(
-                                    context,
-                                    "Entrar com Facebook",
-                                    Colors.blue,
-                                    Image.asset(
+                                  LoginBtn(
+                                    context: context,
+                                    corTexto: Colors.white,
+                                    texto: "Entrar com Facebook",
+                                    cor: Colors.blue,
+                                    icon: Image.asset(
                                       "assets/icons/facebook.png",
                                       height: 20,
                                     ),
-                                    () {},
+                                    funcao: () {},
                                   ),
                                 ],
                               ),
@@ -132,17 +197,25 @@ class WelcomeScreen extends StatelessWidget {
 
                       // Navigator.pushNamed(context, "/login");
                     },
-                    child: Text(
-                      "Entrar",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 22,
-                      ),
-                    ),
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 50,
+                  child: LoginBtn(
+                      borda: true,
+                      context: context,
+                      texto: "Criar Conta",
+                      cor: Colors.transparent,
+                      icon: null,
+                      funcao: () {
+                        Navigator.pushNamed(context, "/register");
+                      },
+                      corTexto: Colors.white),
+                ),
+              )
             ],
           ),
         ),
@@ -150,90 +223,35 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  void loginEmail(BuildContext context) {
-    Navigator.pop(context);
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: 200,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _labelTextInput("Email", false, Icons.mail),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 20),
-                  child: _labelTextInput("Senha", false, Icons.mail),
-                ),
-                _loginBtn(context, "Entrar", Colors.black, Icon(Icons.send),
-                    () {
-                })
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  void logarUsuarioEmailSenha(
+      GlobalKey<FormState> formKey,
+      TextEditingController emailController,
+      TextEditingController senhaController,
+      FirebaseAuth auth) async {
+    if (formKey.currentState!.validate()) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailController.text, password: senhaController.text);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('Nenhum usuário encontrado para esse e-mail.');
+        } else if (e.code == 'wrong-password') {
+          print('Senha errada fornecida para esse usuário');
+        }
+      }
+
+      // VERIFICAR O ESTADO DO USUARIO, LOGADO OU NÃO
+      auth.idTokenChanges().listen((User? usuario) {
+        if (usuario == null) {
+          print('O usuário está desconectado no momento!');
+        } else {
+          print('O usuário está conectado!');
+        }
+      });
+    }
   }
 }
-
-Widget _labelTextInput(String hintText, bool isPassword, IconData icon) {
-  return Row(
-    children: [
-      Icon(icon, color: Colors.grey),
-      Container(
-        width: 250,
-        child: TextField(
-          obscureText: isPassword,
-          cursorColor: Colors.white,
-          style: TextStyle(),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
-            hintText: hintText,
-            hintStyle: const TextStyle(
-              color: Color(0xffc5d2e1),
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _loginBtn(BuildContext context, String texto, Color? cor, Widget? icon,
-    Function funcao,
-    {Color corTexto = Colors.white}) {
-  return SizedBox(
-    width: double.infinity,
-    child: ElevatedButton(
-      onPressed: () => funcao(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: icon,
-          ),
-          Text(texto, style: TextStyle(color: corTexto)),
-        ],
-      ),
-      style: ElevatedButton.styleFrom(
-          padding: EdgeInsetsDirectional.symmetric(vertical: 10),
-          backgroundColor: cor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-    ),
-  );
-}
-
-
-
-
-
 // GoogleFonts.josefinSans(
 
 //                         textStyle: const TextStyle(

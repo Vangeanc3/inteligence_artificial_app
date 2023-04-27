@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
-import 'package:inteligence_artificial_app/screens/login_screen/login_screen.dart';
+import 'package:inteligence_artificial_app/screens/login_screen/register_screen.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/welcome_screen.dart';
 import 'package:inteligence_artificial_app/splash/splash_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
@@ -49,9 +49,9 @@ class MyApp extends StatelessWidget {
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case "/login":
+          case "/register":
             return PageTransition(
-                child: LoginScreen(),
+                child: RegisterScreen(),
                 type: PageTransitionType.bottomToTop,
                 duration: const Duration(milliseconds: 300));
           case "/gpt":
