@@ -23,6 +23,8 @@ class LoginBtn extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        
+        onHover: (value) {},
         onPressed: () => funcao(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +36,9 @@ class LoginBtn extends StatelessWidget {
             Text(texto, style: TextStyle(color: corTexto)),
           ],
         ),
+        
         style: ElevatedButton.styleFrom(
+          
             padding: EdgeInsetsDirectional.symmetric(vertical: 10),
             backgroundColor: cor,
             shape: RoundedRectangleBorder(

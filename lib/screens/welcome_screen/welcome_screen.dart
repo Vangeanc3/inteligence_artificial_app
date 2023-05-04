@@ -1,19 +1,62 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
+import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn_ink.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    var _emailController = TextEditingController();
-    var _senhaController = TextEditingController();
-    FirebaseAuth auth = FirebaseAuth.instance;
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
 
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  late StreamSubscription<bool> keyboardSubscription;
+  final _formKey = GlobalKey<FormState>();
+  var _emailController = TextEditingController();
+  var _senhaController = TextEditingController();
+  double alturaConstraints = 500;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    // Query
+    print(
+        'Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
+
+    // Subscribe
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (visible) {
+        setState(() {
+          alturaConstraints = MediaQuery.of(context).size.height * 0.65;
+          print(alturaConstraints);
+        });
+      } else {
+        alturaConstraints = MediaQuery.of(context).size.height * 0.5;
+      }
+
+      print('Keyboard visibility update. Is visible: $visible');
+    });
+  }
+
+  @override
+  void dispose() {
+    keyboardSubscription.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -68,13 +111,6 @@ class WelcomeScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(20, 150, 20, 10),
                 child: Container(
                   height: 50,
-                  // decoration: BoxDecoration(
-                  //   gradient: LinearGradient(
-                  //       begin: Alignment.topCenter,
-                  //       end: Alignment.bottomCenter,
-                  //       colors: ThemeColors.headerGradient),
-                  //   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  // ),
                   child: LoginBtn(
                     texto: "Entrar",
                     context: context,
@@ -88,8 +124,8 @@ class WelcomeScreen extends StatelessWidget {
                           return SizedBox(
                             height: 210,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10),
                               child: Column(
                                 children: [
                                   LoginBtn(
@@ -102,44 +138,50 @@ class WelcomeScreen extends StatelessWidget {
                                       // SE FOR LOGAR COM EMAIL ABRE UM FORMULARIO MODAL
                                       Navigator.pop(context);
                                       showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(25))),
                                         context: context,
                                         builder: (context) {
                                           return Form(
                                             key: _formKey,
-                                            child: SizedBox(
-                                              height: 250,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 20),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 30),
-                                                      child: LabelTextInput(
-                                                          hintText: "Email",
-                                                          isPassword: false,
-                                                          icon: Icons.mail,
-                                                          controllerField:
-                                                              _emailController),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 20),
-                                                      child: LabelTextInput(
-                                                          hintText: "Senha",
-                                                          isPassword: false,
-                                                          icon: Icons.mail,
-                                                          controllerField:
-                                                              _senhaController),
-                                                    ),
-                                                    LoginBtn(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 20),
+                                              child: Wrap(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 30),
+                                                    child: LabelTextInput(
+                                                        hintText: "Email",
+                                                        isPassword: false,
+                                                        icon: Icons.mail,
+                                                        controllerField:
+                                                            _emailController),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 20),
+                                                    child: LabelTextInput(
+                                                        hintText: "Senha",
+                                                        isPassword: false,
+                                                        icon: Icons.password,
+                                                        controllerField:
+                                                            _senhaController),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: MediaQuery.of(
+                                                                context)
+                                                            .viewInsets
+                                                            .bottom),
+                                                    child: LoginBtn(
                                                       context: context,
                                                       texto: "Entrar",
                                                       corTexto: Colors.white,
@@ -152,9 +194,9 @@ class WelcomeScreen extends StatelessWidget {
                                                             _senhaController,
                                                             auth);
                                                       },
-                                                    )
-                                                  ],
-                                                ),
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             ),
                                           );
@@ -167,16 +209,30 @@ class WelcomeScreen extends StatelessWidget {
                                         vertical: 10),
                                     child: Text("ou"),
                                   ),
-                                  LoginBtn(
-                                      context: context,
-                                      texto: "Entrar com Google",
-                                      cor: Colors.white,
-                                      icon: Image.asset(
-                                        "assets/icons/google.png",
-                                        height: 20,
-                                      ),
-                                      funcao: () {},
-                                      corTexto: Colors.black),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: InkWell(
+                                        autofocus: true,
+                                        splashColor: Colors.red,
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        onTap: () {
+                                          try {
+                                            signInWithGoogle();
+                                          } catch (e) {
+                                            throw Exception();
+                                          }
+                                        },
+                                        child: BoxCarde(
+                                          corTexto: Colors.black,
+                                          texto: "Entrar com Google",
+                                          cor: Colors.black,
+                                          icon: Image.asset(
+                                            "assets/icons/google.png",
+                                            height: 20,
+                                          ),
+                                        )),
+                                  ),
                                   LoginBtn(
                                     context: context,
                                     corTexto: Colors.white,
@@ -246,12 +302,33 @@ class WelcomeScreen extends StatelessWidget {
         if (usuario == null) {
           print('O usuário está desconectado no momento!');
         } else {
+          print(usuario.email);
           print('O usuário está conectado!');
+          Navigator.pushReplacementNamed(context, "/gpt");
         }
       });
     }
   }
 }
+
+Future<UserCredential> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+
+
+
+
+
 // GoogleFonts.josefinSans(
 
 //                         textStyle: const TextStyle(

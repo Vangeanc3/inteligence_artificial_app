@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/gpt_screen.dart';
-import 'package:inteligence_artificial_app/screens/login_screen/register_screen.dart';
+import 'package:inteligence_artificial_app/screens/register_screen/register_screen.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/welcome_screen.dart';
 import 'package:inteligence_artificial_app/splash/splash_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';

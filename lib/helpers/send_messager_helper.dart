@@ -10,6 +10,7 @@ import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
 enviaMensagem(String mensagem, BuildContext context, int? id) async {
+  late OpenAIChatCompletionModel chatCompletion;
   print(id);
   // MENSAGEM ENVIADA PELO USUARIO ARMAZENADA NO DISPOSITIVO
   if (id != null) {
@@ -36,52 +37,65 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
   });
 
   // RESPONSE DA REQUEST
-  OpenAIChatCompletionModel chatCompletion = await OpenAI.instance.chat.create(
-    model: "gpt-3.5-turbo",
-    messages: [
-      OpenAIChatCompletionChoiceMessageModel(
-        content: mensagem,
-        role: OpenAIChatMessageRole.user,
-      ),
-    ],
-  );
-
-  switch (chatCompletion.choices[0].message.content) {
-    case "erro ao se comunicar com o servidor":
-      Provider.of<Mensagens>(context, listen: false).removeLoading();
-      Provider.of<Mensagens>(context, listen: false).addMensagem({
-        "texto": const BoxCard(
-          color: ThemeColors.erroColor,
-          widget: Text(
-              "Erro ao tentar se comunicar com a inteligência artificial, tente enviar uma mensagem para o administrador. "
-              "Pois, precisamos corrigir esse erro imediatamente."),
+  try {
+    chatCompletion = await OpenAI.instance.chat.create(
+      model: "gpt-3.5-turbo",
+      messages: [
+        OpenAIChatCompletionChoiceMessageModel(
+          content: mensagem,
+          role: OpenAIChatMessageRole.user,
         ),
-        "receveid": true,
-        "loading": true // PARA APARECER COMO WIDGET PERSONALIZADO NA COR RED
-      });
-      break;
-    default:
-      if (id != null) {
-        await MensagensDao().addMsg({
-          "texto": chatCompletion.choices[0].message.content,
+      ],
+    );
+
+    switch (chatCompletion.choices[0].message.content) {
+      case "erro ao se comunicar com o servidor":
+        Provider.of<Mensagens>(context, listen: false).removeLoading();
+        Provider.of<Mensagens>(context, listen: false).addMensagem({
+          "texto": const BoxCard(
+            color: ThemeColors.erroColor,
+            widget: Text(
+                "Erro ao tentar se comunicar com a inteligência artificial, tente enviar uma mensagem para o administrador. "
+                "Pois, precisamos corrigir esse erro imediatamente."),
+          ),
           "receveid": true,
-          "loading": false
-        }, id);
-      }
-
-      Provider.of<Mensagens>(context, listen: false)
-          .removeLoading(); // FUNÇÃO QUE REMOVE O LOADING
-
-      Future.delayed(
-        // MOSTRANDO A RESPONSE PARA O USUÁRIO
-        const Duration(milliseconds: 50),
-        () {
-          Provider.of<Mensagens>(context, listen: false).addMensagem({
+          "loading": true // PARA APARECER COMO WIDGET PERSONALIZADO NA COR RED
+        });
+        break;
+      default:
+        if (id != null) {
+          await MensagensDao().addMsg({
             "texto": chatCompletion.choices[0].message.content,
             "receveid": true,
             "loading": false
-          });
-        },
-      );
+          }, id);
+        }
+
+        Provider.of<Mensagens>(context, listen: false)
+            .removeLoading(); // FUNÇÃO QUE REMOVE O LOADING
+
+        Future.delayed(
+          // MOSTRANDO A RESPONSE PARA O USUÁRIO
+          const Duration(milliseconds: 50),
+          () {
+            Provider.of<Mensagens>(context, listen: false).addMensagem({
+              "texto": chatCompletion.choices[0].message.content,
+              "receveid": true,
+              "loading": false
+            });
+          },
+        );
+    }
+  } on RequestFailedException catch (e) {
+    Provider.of<Mensagens>(context, listen: false).removeLoading();
+        Provider.of<Mensagens>(context, listen: false).addMensagem({
+          "texto": const BoxCard(
+            color: ThemeColors.erroColor,
+            widget: Text(
+              "Erro ao se comunicar com a IA. Pode ser falta de tokens"),
+          ),
+          "receveid": true,
+          "loading": true // PARA APARECER COMO WIDGET PERSONALIZADO NA COR RED
+        });
   }
 }
