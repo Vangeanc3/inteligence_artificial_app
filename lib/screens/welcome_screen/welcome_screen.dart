@@ -1,14 +1,11 @@
-import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn_ink.dart';
-import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -18,42 +15,10 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  late StreamSubscription<bool> keyboardSubscription;
   final _formKey = GlobalKey<FormState>();
   var _emailController = TextEditingController();
   var _senhaController = TextEditingController();
-  double alturaConstraints = 500;
   FirebaseAuth auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    var keyboardVisibilityController = KeyboardVisibilityController();
-    // Query
-    print(
-        'Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
-
-    // Subscribe
-    keyboardSubscription =
-        keyboardVisibilityController.onChange.listen((bool visible) {
-      if (visible) {
-        setState(() {
-          alturaConstraints = MediaQuery.of(context).size.height * 0.65;
-          print(alturaConstraints);
-        });
-      } else {
-        alturaConstraints = MediaQuery.of(context).size.height * 0.5;
-      }
-
-      print('Keyboard visibility update. Is visible: $visible');
-    });
-  }
-
-  @override
-  void dispose() {
-    keyboardSubscription.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,139 +82,154 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     icon: null,
                     corTexto: Colors.white,
                     cor: Colors.purple[900],
-                    funcao: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return SizedBox(
-                            height: 210,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 10),
-                              child: Column(
-                                children: [
-                                  LoginBtn(
-                                    context: context,
-                                    corTexto: Colors.white,
-                                    texto: "Entrar com Email",
-                                    cor: Colors.black,
-                                    icon: Icon(Icons.email),
-                                    funcao: () {
-                                      // SE FOR LOGAR COM EMAIL ABRE UM FORMULARIO MODAL
-                                      Navigator.pop(context);
-                                      showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(25))),
-                                        context: context,
-                                        builder: (context) {
-                                          return Form(
-                                            key: _formKey,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 20),
-                                              child: Wrap(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 30),
-                                                    child: LabelTextInput(
-                                                        hintText: "Email",
-                                                        isPassword: false,
-                                                        icon: Icons.mail,
-                                                        controllerField:
-                                                            _emailController),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 20),
-                                                    child: LabelTextInput(
-                                                        hintText: "Senha",
-                                                        isPassword: false,
-                                                        icon: Icons.password,
-                                                        controllerField:
-                                                            _senhaController),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        bottom: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets
-                                                            .bottom),
-                                                    child: LoginBtn(
-                                                      context: context,
-                                                      texto: "Entrar",
-                                                      corTexto: Colors.white,
-                                                      cor: Colors.black,
-                                                      icon: Icon(Icons.send),
-                                                      funcao: () async {
-                                                        logarUsuarioEmailSenha(
-                                                            _formKey,
-                                                            _emailController,
-                                                            _senhaController,
-                                                            auth);
-                                                      },
+                    funcao: () async {
+                      final user = auth.currentUser;
+                      if (user != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Bem vindo de volta mestre!",
+                              style: TextStyle(color: Colors.white)),
+                          backgroundColor: Colors.purple[900],
+                        ));
+                        await Future.delayed(Duration(seconds: 2));
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/gpt", (route) => false);
+                      } else {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return SizedBox(
+                              height: 210,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 10),
+                                child: Column(
+                                  children: [
+                                    LoginBtn(
+                                      context: context,
+                                      corTexto: Colors.white,
+                                      texto: "Entrar com Email",
+                                      cor: Colors.black,
+                                      icon: Icon(Icons.email),
+                                      funcao: () {
+                                        // SE FOR LOGAR COM EMAIL ABRE UM FORMULARIO MODAL
+                                        Navigator.pop(context);
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top:
+                                                          Radius.circular(25))),
+                                          context: context,
+                                          builder: (context) {
+                                            return Form(
+                                              key: _formKey,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20,
+                                                        vertical: 20),
+                                                child: Wrap(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 30),
+                                                      child: LabelTextInput(
+                                                          hintText: "Email",
+                                                          isPassword: false,
+                                                          icon: Icons.mail,
+                                                          controllerField:
+                                                              _emailController),
                                                     ),
-                                                  )
-                                                ],
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 20),
+                                                      child: LabelTextInput(
+                                                          hintText: "Senha",
+                                                          isPassword: false,
+                                                          icon: Icons.password,
+                                                          controllerField:
+                                                              _senhaController),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: MediaQuery.of(
+                                                                  context)
+                                                              .viewInsets
+                                                              .bottom),
+                                                      child: LoginBtn(
+                                                        context: context,
+                                                        texto: "Entrar",
+                                                        corTexto: Colors.white,
+                                                        cor: Colors.black,
+                                                        icon: Icon(Icons.send),
+                                                        funcao: () async {
+                                                          logarUsuarioEmailSenha(
+                                                              _formKey,
+                                                              _emailController,
+                                                              _senhaController,
+                                                              auth);
+                                                        },
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Text("ou"),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: InkWell(
-                                        autofocus: true,
-                                        splashColor: Colors.red,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        onTap: () {
-                                          try {
-                                            signInWithGoogle();
-                                          } catch (e) {
-                                            throw Exception();
-                                          }
-                                        },
-                                        child: BoxCarde(
-                                          corTexto: Colors.black,
-                                          texto: "Entrar com Google",
-                                          cor: Colors.black,
-                                          icon: Image.asset(
-                                            "assets/icons/google.png",
-                                            height: 20,
-                                          ),
-                                        )),
-                                  ),
-                                  LoginBtn(
-                                    context: context,
-                                    corTexto: Colors.white,
-                                    texto: "Entrar com Facebook",
-                                    cor: Colors.blue,
-                                    icon: Image.asset(
-                                      "assets/icons/facebook.png",
-                                      height: 20,
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
-                                    funcao: () {},
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Text("ou"),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: InkWell(
+                                          autofocus: true,
+                                          splashColor: Colors.red,
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          onTap: () async {
+                                            try {
+                                              signInWithGoogle(auth, context);
+                                            } catch (e) {
+                                              throw Exception();
+                                            }
+                                          },
+                                          child: BoxCarde(
+                                            corTexto: Colors.black,
+                                            texto: "Entrar com Google",
+                                            cor: Colors.black,
+                                            icon: Image.asset(
+                                              "assets/icons/google.png",
+                                              height: 20,
+                                            ),
+                                          )),
+                                    ),
+                                    LoginBtn(
+                                      context: context,
+                                      corTexto: Colors.white,
+                                      texto: "Entrar com Facebook",
+                                      cor: Colors.blue,
+                                      icon: Image.asset(
+                                        "assets/icons/facebook.png",
+                                        height: 20,
+                                      ),
+                                      funcao: () {},
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      );
+                            );
+                          },
+                        );
+                      }
 
                       // Navigator.pushNamed(context, "/login");
                     },
@@ -311,7 +291,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
-Future<UserCredential> signInWithGoogle() async {
+void signInWithGoogle(FirebaseAuth auth, BuildContext context) async {
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
   final GoogleSignInAuthentication? googleAuth =
@@ -322,7 +302,18 @@ Future<UserCredential> signInWithGoogle() async {
     idToken: googleAuth?.idToken,
   );
 
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+  auth.idTokenChanges().listen((User? usuario) {
+    if (usuario == null) {
+      print('O usuário está desconectado no momento!');
+    } else {
+      print(usuario.email);
+      print('O usuário está conectado!');
+      Navigator.pushReplacementNamed(context, "/gpt");
+    }
+  });
+
+  // return
+  await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
 

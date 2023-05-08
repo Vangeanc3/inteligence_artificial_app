@@ -42,10 +42,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/splash",
       routes: {
-        "/welcome": (context) => const WelcomeScreen(),
         "/splash": (context) => const SplashScreen(),
-
-        // "/gpt": (context) => const GptScreen(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -59,6 +56,11 @@ class MyApp extends StatelessWidget {
                 child: GptScreen(),
                 type: PageTransitionType.bottomToTop,
                 duration: const Duration(milliseconds: 300));
+          case "/welcome":
+            return PageTransition(
+                child: WelcomeScreen(),
+                type: PageTransitionType.bottomToTop,
+                duration: Duration(microseconds: 300));
           default:
             return null;
         }

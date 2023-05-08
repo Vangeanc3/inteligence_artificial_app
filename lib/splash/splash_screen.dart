@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _controller.play();
 
     // ADD O DELAY PARA INICIAR O VIDEO COMPLETO
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 4));
 
     //  NAVEGANDO PARA A TELA INICIAL
     Navigator.pushReplacementNamed(context, "/welcome");
