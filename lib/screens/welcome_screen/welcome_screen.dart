@@ -6,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn_ink.dart';
+import 'package:inteligence_artificial_app/screens/welcome_screen/helpers/sign_in_with_google.dart';
+import 'package:inteligence_artificial_app/screens/welcome_screen/helpers/sign_in_with_email_senha.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -258,67 +260,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
-
-  void logarUsuarioEmailSenha(
-      GlobalKey<FormState> formKey,
-      TextEditingController emailController,
-      TextEditingController senhaController,
-      FirebaseAuth auth) async {
-    if (formKey.currentState!.validate()) {
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: emailController.text, password: senhaController.text);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          print('Nenhum usuário encontrado para esse e-mail.');
-        } else if (e.code == 'wrong-password') {
-          print('Senha errada fornecida para esse usuário');
-        }
-      }
-
-      // VERIFICAR O ESTADO DO USUARIO, LOGADO OU NÃO
-      auth.idTokenChanges().listen((User? usuario) {
-        if (usuario == null) {
-          print('O usuário está desconectado no momento!');
-        } else {
-          print(usuario.email);
-          print('O usuário está conectado!');
-          Navigator.pushReplacementNamed(context, "/gpt");
-        }
-      });
-    }
-  }
 }
-
-void signInWithGoogle(FirebaseAuth auth, BuildContext context) async {
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
-
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
-
-  auth.idTokenChanges().listen((User? usuario) {
-    if (usuario == null) {
-      print('O usuário está desconectado no momento!');
-    } else {
-      print(usuario.email);
-      print('O usuário está conectado!');
-      Navigator.pushReplacementNamed(context, "/gpt");
-    }
-  });
-
-  // return
-  await FirebaseAuth.instance.signInWithCredential(credential);
-}
-
-
-
-
 
 // GoogleFonts.josefinSans(
 

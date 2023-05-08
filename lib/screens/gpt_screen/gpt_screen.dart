@@ -4,6 +4,10 @@ import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/helpers/verify_connection.dart';
 import 'package:inteligence_artificial_app/screens/gpt_screen/widgets/body_messages.dart';
+import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/add_msg_inicial.dart';
+import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/retorna_mensagens.dart';
+import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/limpa_msgs.dart';
+import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/call_back_titulos.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:inteligence_artificial_app/components/input_box_message.dart';
 import 'package:provider/provider.dart';
@@ -118,29 +122,5 @@ class _GptScreenState extends State<GptScreen> {
         ],
       ),
     );
-  }
-
-  void addMsgInicial(BuildContext context) {
-    Provider.of<Mensagens>(context, listen: false).addMensagem({
-      "texto": "Olá, em que posso ajuda-lo",
-      "receveid": true,
-      "loading": false
-    });
-  }
-
-  void callBackTitulos(BuildContext context) async {
-    Provider.of<MensagensTitulo>(context, listen: false).limpaLista();
-    Provider.of<MensagensTitulo>(context, listen: false).iniciaLista();
-  }
-
-  void retornaMensagens(int id, BuildContext context) async {
-    mensagens = await MensagensDao().retornaMensagem(id);
-    final msgs = await MensagensDao().procurarMensagem(id);
-
-    Provider.of<Mensagens>(context, listen: false).substituirMensagens(msgs);
-  }
-
-  void limpaMsgs(BuildContext context) {
-    Provider.of<Mensagens>(context, listen: false).limpaMsgs();
   }
 }
