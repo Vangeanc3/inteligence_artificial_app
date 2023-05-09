@@ -126,7 +126,7 @@ Widget _loginBtn(
     ),
     child: TextButton(
       onPressed: () async {
-       criaContaEmailSenha();
+       criaContaEmailSenha(formKey, auth, emailController, senhaController);
       },
       child: Text(
         "Criar",

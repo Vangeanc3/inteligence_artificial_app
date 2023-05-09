@@ -1,4 +1,8 @@
-void signInWithGoogle(FirebaseAuth auth, BuildContext context) async {
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+Future<bool> signInWithGoogle(FirebaseAuth auth, BuildContext context) async {
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
   final GoogleSignInAuthentication? googleAuth =
@@ -9,16 +13,12 @@ void signInWithGoogle(FirebaseAuth auth, BuildContext context) async {
     idToken: googleAuth?.idToken,
   );
 
-  auth.idTokenChanges().listen((User? usuario) {
-    if (usuario == null) {
-      print('O usuário está desconectado no momento!');
-    } else {
-      print(usuario.email);
-      print('O usuário está conectado!');
-      Navigator.pushReplacementNamed(context, "/gpt");
-    }
-  });
-
-  // return
-  await FirebaseAuth.instance.signInWithCredential(credential);
+  try {
+    var t = await FirebaseAuth.instance.signInWithCredential(credential);
+    print("usuárioooooooooo: {$t.user}");
+    return true; // retorna true se o processo de autenticação for bem-sucedido
+  } catch (e) {
+    print("Erro ao autenticar com o Google: $e");
+    return false; // retorna false se o processo de autenticação falhar
+  }
 }

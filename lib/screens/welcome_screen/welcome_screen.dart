@@ -172,7 +172,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                               _formKey,
                                                               _emailController,
                                                               _senhaController,
-                                                              auth);
+                                                              auth,
+                                                              context);
                                                         },
                                                       ),
                                                     )
@@ -198,11 +199,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           borderRadius:
                                               BorderRadius.circular(100),
                                           onTap: () async {
-                                            try {
-                                              signInWithGoogle(auth, context);
-                                            } catch (e) {
-                                              throw Exception();
-                                            }
+                                            signInWithGoogle(auth, context).then((value) {
+                                              if(value == false){
+                                                Center(child: CircularProgressIndicator());
+                                                  IMPLEMENTAR AMANHÃ
+                                              }
+                                            });
                                           },
                                           child: BoxCarde(
                                             corTexto: Colors.black,
