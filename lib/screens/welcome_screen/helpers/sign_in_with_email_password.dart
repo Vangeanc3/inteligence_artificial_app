@@ -1,17 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-void logarUsuarioEmailSenha(
-    GlobalKey<FormState> formKey,
-    TextEditingController emailController,
-    TextEditingController senhaController,
-    FirebaseAuth auth,
-    BuildContext context) async {
+Future signInWithEmailPassword(
+  GlobalKey<FormState> formKey,
+  TextEditingController emailController,
+  TextEditingController senhaController,
+  FirebaseAuth auth,
+  BuildContext context,
+) async {
   if (formKey.currentState!.validate()) {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: emailController.text, password: senhaController.text);
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('Nenhum usuário encontrado para esse e-mail.');

@@ -1,13 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
+import 'package:inteligence_artificial_app/screens/welcome_screen/login_controller.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn_ink.dart';
-import 'package:inteligence_artificial_app/screens/welcome_screen/helpers/sign_in_with_google.dart';
-import 'package:inteligence_artificial_app/screens/welcome_screen/helpers/sign_in_with_email_senha.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -18,9 +14,9 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final _formKey = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
   var _emailController = TextEditingController();
   var _senhaController = TextEditingController();
-  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -168,12 +164,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                         cor: Colors.black,
                                                         icon: Icon(Icons.send),
                                                         funcao: () async {
-                                                          logarUsuarioEmailSenha(
-                                                              _formKey,
-                                                              _emailController,
-                                                              _senhaController,
-                                                              auth,
-                                                              context);
+                                                          LoginController()
+                                                              .passwordLogin(
+                                                                  _formKey,
+                                                                  _emailController,
+                                                                  _senhaController,
+                                                                  auth,
+                                                                  context);
                                                         },
                                                       ),
                                                     )
@@ -198,13 +195,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           splashColor: Colors.red,
                                           borderRadius:
                                               BorderRadius.circular(100),
-                                          onTap: () async {
-                                            signInWithGoogle(auth, context).then((value) {
-                                              if(value == false){
-                                                Center(child: CircularProgressIndicator());
-                                                  IMPLEMENTAR AMANHÃ
-                                              }
-                                            });
+                                          onTap: () {
+                                            LoginController()
+                                                .googleLogin(context);
                                           },
                                           child: BoxCarde(
                                             corTexto: Colors.black,
@@ -263,17 +256,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-
-// GoogleFonts.josefinSans(
-
-//                         textStyle: const TextStyle(
-
-//                           color: Colors.white,
-
-//                           fontWeight: FontWeight.w800,
-
-//                           fontSize: 22,
-
-//                         ),
-
-//                       )

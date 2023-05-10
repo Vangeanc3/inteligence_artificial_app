@@ -1,24 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-Future<bool> signInWithGoogle(FirebaseAuth auth, BuildContext context) async {
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+  // Obtain the auth details from the request
   final GoogleSignInAuthentication? googleAuth =
       await googleUser?.authentication;
 
+  // Create a new credential
   final credential = GoogleAuthProvider.credential(
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
 
-  try {
-    var t = await FirebaseAuth.instance.signInWithCredential(credential);
-    print("usuárioooooooooo: {$t.user}");
-    return true; // retorna true se o processo de autenticação for bem-sucedido
-  } catch (e) {
-    print("Erro ao autenticar com o Google: $e");
-    return false; // retorna false se o processo de autenticação falhar
-  }
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }

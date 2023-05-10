@@ -49,6 +49,7 @@ dependencies:
   firebase_auth: ^4.3.0
   flutter_keyboard_visibility: ^5.4.1
   google_sign_in: ^6.1.0
+  asyncstate: ^0.0.5
 
 dev_dependencies:
   flutter_test:

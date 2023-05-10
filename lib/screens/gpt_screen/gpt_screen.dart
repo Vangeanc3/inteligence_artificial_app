@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/data/mensagens.dart';
 import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
@@ -19,6 +21,7 @@ class GptScreen extends StatefulWidget {
 }
 
 class _GptScreenState extends State<GptScreen> {
+  final auth = FirebaseAuth.instance;
   var mensagens;
 
   @override
@@ -72,7 +75,9 @@ class _GptScreenState extends State<GptScreen> {
             )),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
-              onTap: () {
+              onTap: () async {
+                await auth.signOut();
+                await GoogleSignIn().signOut();
                 Navigator.pushReplacementNamed(context, "/welcome");
               },
             ),
