@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
-import 'package:inteligence_artificial_app/screens/welcome_screen/login_controller.dart';
+import 'package:inteligence_artificial_app/controllers/login_controller.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
 import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn_ink.dart';
 
@@ -14,6 +14,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
   final auth = FirebaseAuth.instance;
   var _emailController = TextEditingController();
   var _senhaController = TextEditingController();
@@ -112,7 +113,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                         // SE FOR LOGAR COM EMAIL ABRE UM FORMULARIO MODAL
                                         Navigator.pop(context);
                                         showModalBottomSheet(
-                                          isScrollControlled: true,
+                                          // isScrollControlled: true,
                                           shape: const RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.vertical(
@@ -120,61 +121,69 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                           Radius.circular(25))),
                                           context: context,
                                           builder: (context) {
-                                            return Form(
-                                              key: _formKey,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 20),
-                                                child: Wrap(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 30),
-                                                      child: LabelTextInput(
-                                                          hintText: "Email",
-                                                          isPassword: false,
-                                                          icon: Icons.mail,
-                                                          controllerField:
-                                                              _emailController),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 20),
-                                                      child: LabelTextInput(
-                                                          hintText: "Senha",
-                                                          isPassword: false,
-                                                          icon: Icons.password,
-                                                          controllerField:
-                                                              _senhaController),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          bottom: MediaQuery.of(
-                                                                  context)
-                                                              .viewInsets
-                                                              .bottom),
-                                                      child: LoginBtn(
-                                                        context: context,
-                                                        texto: "Entrar",
-                                                        corTexto: Colors.white,
-                                                        cor: Colors.black,
-                                                        icon: Icon(Icons.send),
-                                                        funcao: () async {
-                                                          LoginController()
-                                                              .passwordLogin(
-                                                                  _formKey,
-                                                                  _emailController,
-                                                                  _senhaController,
-                                                                  auth,
-                                                                  context);
-                                                        },
+                                            return Scaffold(
+                                              body: Form(
+                                                key: _formKey,
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 20),
+                                                  child: Wrap(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 30),
+                                                        child: LabelTextInput(
+                                                            hintText: "Email",
+                                                            isPassword: false,
+                                                            icon: Icons.mail,
+                                                            controllerField:
+                                                                _emailController),
                                                       ),
-                                                    )
-                                                  ],
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 20),
+                                                        child: LabelTextInput(
+                                                            hintText: "Senha",
+                                                            isPassword: false,
+                                                            icon:
+                                                                Icons.password,
+                                                            controllerField:
+                                                                _senhaController),
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(
+                                                            bottom:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets
+                                                                    .bottom),
+                                                        child: LoginBtn(
+                                                          context: context,
+                                                          texto: "Entrar",
+                                                          corTexto:
+                                                              Colors.white,
+                                                          cor: Colors.black,
+                                                          icon:
+                                                              Icon(Icons.send),
+                                                          funcao: () async {
+                                                            LoginController()
+                                                                .passwordLogin(
+                                                                    _formKey,
+                                                                    _emailController,
+                                                                    _senhaController,
+                                                                    auth,
+                                                                    context);
+                                                          },
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             );

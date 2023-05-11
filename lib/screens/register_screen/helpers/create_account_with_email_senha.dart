@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-void criaContaEmailSenha(
+Future criaContaEmailSenha(
     GlobalKey<FormState> formKey,
     FirebaseAuth auth,
     TextEditingController emailController,
-    TextEditingController senhaController) async {
+    TextEditingController senhaController,
+    BuildContext context) async {
   if (formKey.currentState!.validate()) {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -31,6 +32,8 @@ void criaContaEmailSenha(
 
     emailController.clear();
     senhaController.clear();
+
+    // Navigator.pushNamedAndRemoveUntil(context, "/gpt", (route) => false);
   }
 
   // Navigator.pushNamedAndRemoveUntil(context, "/gpt", (route) => false);

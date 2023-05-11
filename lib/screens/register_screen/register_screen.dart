@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
+import 'package:inteligence_artificial_app/controllers/login_controller.dart';
 import 'package:inteligence_artificial_app/helpers/form_validator_helper.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:inteligence_artificial_app/screens/register_screen/helpers/create_account_with_email_senha.dart';
-
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -71,7 +71,7 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
                         children: [
                           _logo(),
@@ -125,8 +125,9 @@ Widget _loginBtn(
       borderRadius: BorderRadius.all(Radius.circular(50)),
     ),
     child: TextButton(
-      onPressed: () async {
-       criaContaEmailSenha(formKey, auth, emailController, senhaController);
+      onPressed: () {
+        LoginController().passwordSignUp(
+            formKey, emailController, senhaController, auth, context);
       },
       child: Text(
         "Criar",
