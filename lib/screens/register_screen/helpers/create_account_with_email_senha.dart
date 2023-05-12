@@ -11,10 +11,19 @@ Future criaContaEmailSenha(
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: emailController.text, password: senhaController.text);
+
+      emailController.clear();
+      senhaController.clear();
+
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Senha fraca")));
       } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("E-mail já está em uso")));
         print('The account already exists for that email.');
       }
     } catch (e) {
@@ -22,19 +31,12 @@ Future criaContaEmailSenha(
     }
 
     // VERIFICAR O ESTADO DO USUARIO, LOGADO OU NÃO
-    auth.idTokenChanges().listen((User? usuario) {
-      if (usuario == null) {
-        print('O usuário está desconectado no momento!');
-      } else {
-        print('O usuário está conectado!');
-      }
-    });
-
-    emailController.clear();
-    senhaController.clear();
-
-    // Navigator.pushNamedAndRemoveUntil(context, "/gpt", (route) => false);
+    // auth.idTokenChanges().listen((User? usuario) {
+    //   if (usuario == null) {
+    //     print('O usuário está desconectado no momento!');
+    //   } else {
+    //     print('O usuário está conectado!');
+    //   }
+    // });
   }
-
-  // Navigator.pushNamedAndRemoveUntil(context, "/gpt", (route) => false);
 }

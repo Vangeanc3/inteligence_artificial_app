@@ -50,6 +50,7 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.1
   google_sign_in: ^6.1.0
   asyncstate: ^0.0.5
+  flutter_facebook_auth: '^3.5.0'
 
 dev_dependencies:
   flutter_test:

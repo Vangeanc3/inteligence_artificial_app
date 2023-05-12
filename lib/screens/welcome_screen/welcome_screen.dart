@@ -150,7 +150,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                                 bottom: 20),
                                                         child: LabelTextInput(
                                                             hintText: "Senha",
-                                                            isPassword: false,
+                                                            isPassword: true,
                                                             icon:
                                                                 Icons.password,
                                                             controllerField:
