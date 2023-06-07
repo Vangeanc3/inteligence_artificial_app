@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LoginBtn extends StatelessWidget {
+class BtnPrimario extends StatelessWidget {
   final BuildContext context;
   final String texto;
   final Color? cor;
@@ -8,7 +8,8 @@ class LoginBtn extends StatelessWidget {
   final Function funcao;
   final Color corTexto;
   final bool borda;
-  LoginBtn(
+
+  BtnPrimario(
       {super.key,
       required this.context,
       required this.texto,
@@ -23,7 +24,6 @@ class LoginBtn extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        
         onHover: (value) {},
         onPressed: () => funcao(),
         child: Row(
@@ -36,9 +36,7 @@ class LoginBtn extends StatelessWidget {
             Text(texto, style: TextStyle(color: corTexto)),
           ],
         ),
-        
         style: ElevatedButton.styleFrom(
-          
             padding: EdgeInsetsDirectional.symmetric(vertical: 10),
             backgroundColor: cor,
             shape: RoundedRectangleBorder(

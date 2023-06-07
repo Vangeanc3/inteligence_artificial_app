@@ -2,12 +2,9 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/login_controller.dart';
-import 'package:inteligence_artificial_app/helpers/form_validator_helper.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
-import 'package:inteligence_artificial_app/screens/register_screen/helpers/create_account_with_email_senha.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -32,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned(
-                    top: 200,
+                    top: 100,
                     left: -100,
                     child: Container(
                       width: 300,
@@ -118,6 +115,7 @@ Widget _loginBtn(
   return Container(
     width: double.infinity,
     decoration: const BoxDecoration(
+      color: null,
       gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -139,40 +137,6 @@ Widget _loginBtn(
     ),
   );
 }
-
-// Widget _labelTextInput(String hintText, bool isPassword, IconData icon,
-//     TextEditingController controllerField) {
-//   return Row(
-//     children: [
-//       Icon(icon, color: Colors.grey),
-//       Container(
-//         width: 250,
-//         child: TextFormField(
-//           validator: (value) {
-//             if (validarValor(value)) {
-//               return "Insira o valor correto";
-//             } else {
-//               return null;
-//             }
-//           },
-//           controller: controllerField,
-//           obscureText: isPassword,
-//           cursorColor: Colors.white,
-//           style: TextStyle(),
-//           decoration: InputDecoration(
-//             contentPadding: EdgeInsets.fromLTRB(10, 10, 20, 10),
-//             hintText: hintText,
-//             hintStyle: const TextStyle(
-//               color: Color(0xffc5d2e1),
-//               fontWeight: FontWeight.w400,
-//               fontSize: 16,
-//             ),
-//           ),
-//         ),
-//       ),
-//     ],
-//   );
-// }
 
 Widget _iconsLogin() {
   return Container(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:inteligence_artificial_app/components/label_text_input.dart';
+import 'package:inteligence_artificial_app/components/btn_primario.dart';
 import 'package:inteligence_artificial_app/controllers/login_controller.dart';
-import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn.dart';
-import 'package:inteligence_artificial_app/screens/welcome_screen/widgets/login_btn_ink.dart';
+import 'package:inteligence_artificial_app/components/btn_ink.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -75,7 +75,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 padding: EdgeInsets.fromLTRB(20, 150, 20, 10),
                 child: Container(
                   height: 50,
-                  child: LoginBtn(
+                  child: BtnPrimario(
                     texto: "Entrar",
                     context: context,
                     icon: null,
@@ -103,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     left: 20, right: 20, top: 10),
                                 child: Column(
                                   children: [
-                                    LoginBtn(
+                                    BtnPrimario(
                                       context: context,
                                       corTexto: Colors.white,
                                       texto: "Entrar com Email",
@@ -163,7 +163,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                                         context)
                                                                     .viewInsets
                                                                     .bottom),
-                                                        child: LoginBtn(
+                                                        child: BtnPrimario(
                                                           context: context,
                                                           texto: "Entrar",
                                                           corTexto:
@@ -208,17 +208,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             LoginController()
                                                 .googleLogin(context);
                                           },
-                                          child: BoxCarde(
+                                          child: BtnInk(
                                             corTexto: Colors.black,
                                             texto: "Entrar com Google",
-                                            cor: Colors.black,
+                                            cor: Colors.white,
                                             icon: Image.asset(
                                               "assets/icons/google.png",
                                               height: 20,
                                             ),
                                           )),
                                     ),
-                                    LoginBtn(
+                                    BtnPrimario(
                                       context: context,
                                       corTexto: Colors.white,
                                       texto: "Entrar com Facebook",
@@ -246,7 +246,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   height: 50,
-                  child: LoginBtn(
+                  child: BtnPrimario(
                       borda: true,
                       context: context,
                       texto: "Criar Conta",

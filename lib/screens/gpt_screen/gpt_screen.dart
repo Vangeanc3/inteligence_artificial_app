@@ -22,6 +22,7 @@ class GptScreen extends StatefulWidget {
 
 class _GptScreenState extends State<GptScreen> {
   final auth = FirebaseAuth.instance;
+  final authGoogle = GoogleSignIn();
   var mensagens;
 
   @override
@@ -49,10 +50,12 @@ class _GptScreenState extends State<GptScreen> {
       drawer: Drawer(
         child: Column(
           children: [
-            const UserAccountsDrawerHeader(
-              currentAccountPicture: Icon(Icons.account_circle, size: 50),
-              accountName: Text("Ismael Martins"),
-              accountEmail: Text("ismaelmartins919@gmail.com"),
+            UserAccountsDrawerHeader(
+              currentAccountPicture: (authGoogle.currentUser?.photoUrl != null)
+                  ? Image.network("${authGoogle.currentUser!.photoUrl}")
+                  : Icon(Icons.account_circle, size: 50),
+              accountName: Text("${auth.currentUser!.displayName}"),
+              accountEmail: Text("${auth.currentUser!.email}"),
             ),
             Expanded(child: Consumer<MensagensTitulo>(
               builder: (context, lista, child) {
@@ -75,6 +78,8 @@ class _GptScreenState extends State<GptScreen> {
             )),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
+              title:
+                  Text("Desconectar usuário", style: TextStyle(fontSize: 18)),
               onTap: () async {
                 await auth.signOut();
                 await GoogleSignIn().signOut();

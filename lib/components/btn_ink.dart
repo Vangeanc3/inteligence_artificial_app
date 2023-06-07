@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-class BoxCarde extends StatelessWidget {
+class BtnInk extends StatelessWidget {
   final String texto;
   final Color? cor;
   final Widget? icon;
   final Color corTexto;
   final bool borda;
+  final LinearGradient? gradient;
 
-  const BoxCarde(
+  const BtnInk(
       {super.key,
       required this.texto,
       this.cor,
+      this.gradient,
       this.icon,
       required this.corTexto,
       this.borda = false});
@@ -22,7 +24,8 @@ class BoxCarde extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: kElevationToShadow[3],
           borderRadius: BorderRadius.circular(100),
-          color: Colors.white),
+          color: cor,
+          gradient: gradient),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
