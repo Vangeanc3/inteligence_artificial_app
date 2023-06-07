@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
 import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
-import 'package:inteligence_artificial_app/helpers/form_validator_helper.dart';
-import 'package:inteligence_artificial_app/helpers/send_messager_helper.dart';
+import 'package:inteligence_artificial_app/utils/form_validator_helper.dart';
+import 'package:inteligence_artificial_app/utils/send_messager_helper.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -68,7 +68,7 @@ class _InputBoxMessageState extends State<InputBoxMessage> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       final quant =
-                          Provider.of<Mensagens>(context, listen: false)
+                          Provider.of<MensagensRepository>(context, listen: false)
                               .retornaQuant();
 
                       if (quant == 1) {

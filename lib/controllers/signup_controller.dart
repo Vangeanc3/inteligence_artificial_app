@@ -1,7 +1,24 @@
+import 'package:asyncstate/mixin/asyncstate_mixing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-Future criaContaEmailSenha(
+class SignUpController with AsyncStateMixin {
+  Future passwordSignUp(
+      GlobalKey<FormState> formKey,
+      TextEditingController emailController,
+      TextEditingController senhaController,
+      FirebaseAuth auth,
+      BuildContext context) async {
+    return await callAsyncLoader(criaContaEmailSenha(
+            formKey, auth, emailController, senhaController, context))
+        .then((value) {
+      if (value != null) {
+        Navigator.pushNamedAndRemoveUntil(context, "/gpt", (route) => false);
+      }
+    });
+  }
+
+  Future criaContaEmailSenha(
     GlobalKey<FormState> formKey,
     FirebaseAuth auth,
     TextEditingController emailController,
@@ -40,3 +57,5 @@ Future criaContaEmailSenha(
     // });
   }
 }
+}
+

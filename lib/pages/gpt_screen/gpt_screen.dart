@@ -1,14 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
 import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
-import 'package:inteligence_artificial_app/data/mensagens_titulo.dart';
-import 'package:inteligence_artificial_app/helpers/verify_connection.dart';
-import 'package:inteligence_artificial_app/screens/gpt_screen/widgets/body_messages.dart';
-import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/add_msg_inicial.dart';
-import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/limpa_msgs.dart';
-import 'package:inteligence_artificial_app/screens/gpt_screen/helpers/call_back_titulos.dart';
+import 'package:inteligence_artificial_app/repositories/mensagens_titulo.dart';
+import 'package:inteligence_artificial_app/utils/verify_connection.dart';
+import 'package:inteligence_artificial_app/pages/gpt_screen/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:inteligence_artificial_app/components/input_box_message.dart';
 import 'package:provider/provider.dart';
@@ -36,12 +33,6 @@ class _GptScreenState extends State<GptScreen> {
       callBackTitulos(context);
     });
     // Chamar a função que inicializa o banco de dados ao entrar na tela do chat
-  }
-
-  @override
-  void dispose() {
-    // Limpa a lista quando o widget é descartado
-    super.dispose();
   }
 
   @override
@@ -134,11 +125,28 @@ class _GptScreenState extends State<GptScreen> {
   }
 
   // METODOS AUXILIARES INTERNOS
+  void limpaMsgs(BuildContext context) {
+    Provider.of<MensagensRepository>(context, listen: false).limpaMsgs();
+  }
+
+  void callBackTitulos(BuildContext context) async {
+    Provider.of<MensagensTitulo>(context, listen: false).limpaLista();
+    Provider.of<MensagensTitulo>(context, listen: false).iniciaLista();
+  }
+
+  void addMsgInicial(BuildContext context) {
+    Provider.of<MensagensRepository>(context, listen: false).addMensagem({
+      "texto": "Olá, em que posso ajuda-lo",
+      "receveid": true,
+      "loading": false
+    });
+  }
 
   void retornaMensagens(int id, BuildContext context) async {
     mensagens = await MensagensDao().retornaMensagem(id);
     final msgs = await MensagensDao().procurarMensagem(id);
 
-    Provider.of<Mensagens>(context, listen: false).substituirMensagens(msgs);
+    Provider.of<MensagensRepository>(context, listen: false)
+        .substituirMensagens(msgs);
   }
 }

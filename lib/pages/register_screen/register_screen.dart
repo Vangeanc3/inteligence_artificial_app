@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/components/label_text_input.dart';
+import 'package:inteligence_artificial_app/widgets/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/login_controller.dart';
+import 'package:inteligence_artificial_app/controllers/signup_controller.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -124,7 +125,7 @@ Widget _loginBtn(
     ),
     child: TextButton(
       onPressed: () {
-        LoginController().passwordSignUp(
+        SignUpController().passwordSignUp(
             formKey, emailController, senhaController, auth, context);
       },
       child: Text(

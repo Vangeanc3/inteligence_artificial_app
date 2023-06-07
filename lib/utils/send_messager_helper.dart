@@ -3,8 +3,8 @@
 import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:inteligence_artificial_app/components/box_card.dart';
-import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/widgets/box_card.dart';
+import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
 import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +19,11 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
   }
 
   // MENSAGEM ENVIADA PELO USUÁRIO
-  Provider.of<Mensagens>(context, listen: false)
+  Provider.of<MensagensRepository>(context, listen: false)
       .addMensagem({"texto": mensagem, "receveid": false, "loading": false});
 
   // WIDGET DE LOADING ENQUANTO A MENSAGEM CHEGA
-  Provider.of<Mensagens>(context, listen: false).addMensagem({
+  Provider.of<MensagensRepository>(context, listen: false).addMensagem({
     "texto": BoxCard(
         widget: ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 70),
@@ -50,8 +50,8 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
 
     switch (chatCompletion.choices[0].message.content) {
       case "erro ao se comunicar com o servidor":
-        Provider.of<Mensagens>(context, listen: false).removeLoading();
-        Provider.of<Mensagens>(context, listen: false).addMensagem({
+        Provider.of<MensagensRepository>(context, listen: false).removeLoading();
+        Provider.of<MensagensRepository>(context, listen: false).addMensagem({
           "texto": const BoxCard(
             color: ThemeColors.erroColor,
             widget: Text(
@@ -71,14 +71,14 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
           }, id);
         }
 
-        Provider.of<Mensagens>(context, listen: false)
+        Provider.of<MensagensRepository>(context, listen: false)
             .removeLoading(); // FUNÇÃO QUE REMOVE O LOADING
 
         Future.delayed(
           // MOSTRANDO A RESPONSE PARA O USUÁRIO
           const Duration(milliseconds: 50),
           () {
-            Provider.of<Mensagens>(context, listen: false).addMensagem({
+            Provider.of<MensagensRepository>(context, listen: false).addMensagem({
               "texto": chatCompletion.choices[0].message.content,
               "receveid": true,
               "loading": false
@@ -87,8 +87,8 @@ enviaMensagem(String mensagem, BuildContext context, int? id) async {
         );
     }
   } on RequestFailedException catch (e) {
-    Provider.of<Mensagens>(context, listen: false).removeLoading();
-        Provider.of<Mensagens>(context, listen: false).addMensagem({
+    Provider.of<MensagensRepository>(context, listen: false).removeLoading();
+        Provider.of<MensagensRepository>(context, listen: false).addMensagem({
           "texto": const BoxCard(
             color: ThemeColors.erroColor,
             widget: Text(

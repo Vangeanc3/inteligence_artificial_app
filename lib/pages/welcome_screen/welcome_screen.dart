@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:inteligence_artificial_app/components/label_text_input.dart';
-import 'package:inteligence_artificial_app/components/btn_primario.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:inteligence_artificial_app/widgets/btn_ink.dart';
+import 'package:inteligence_artificial_app/widgets/btn_primario.dart';
+import 'package:inteligence_artificial_app/widgets/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/login_controller.dart';
-import 'package:inteligence_artificial_app/components/btn_ink.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -173,7 +175,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                               Icon(Icons.send),
                                                           funcao: () async {
                                                             LoginController()
-                                                                .passwordLogin(
+                                                                .passwordLoginMixin(
                                                                     _formKey,
                                                                     _emailController,
                                                                     _senhaController,
@@ -206,7 +208,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                               BorderRadius.circular(100),
                                           onTap: () {
                                             LoginController()
-                                                .googleLogin(context);
+                                                .googleLoginMixin(context);
                                           },
                                           child: BtnInk(
                                             corTexto: Colors.black,

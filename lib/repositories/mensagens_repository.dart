@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Mensagens extends ChangeNotifier {
+class MensagensRepository extends ChangeNotifier {
   List<Map<String, dynamic>> mensagens;
 
-  Mensagens({required this.mensagens});
+  MensagensRepository({required this.mensagens});
 
   void addMensagem(Map<String, dynamic> mensagem) {
     mensagens.add(mensagem);

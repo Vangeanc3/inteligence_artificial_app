@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/components/box_card.dart';
-import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/widgets/box_card.dart';
+import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ class BodyMessages extends StatefulWidget {
 class _BodyMessagesState extends State<BodyMessages> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Mensagens>(
+    return Consumer<MensagensRepository>(
       builder: (context, list, child) {
         return CustomScrollView(
           slivers: [
@@ -49,3 +49,4 @@ class _BodyMessagesState extends State<BodyMessages> {
     );
   }
 }
+

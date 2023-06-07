@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/components/box_card.dart';
-import 'package:inteligence_artificial_app/data/mensagens.dart';
+import 'package:inteligence_artificial_app/widgets/box_card.dart';
+import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +13,7 @@ void verifyConnection(BuildContext context) async {
       print('connected');
     }
   } on SocketException catch (_) {
-    Provider.of<Mensagens>(context, listen: false).addMensagem({
+    Provider.of<MensagensRepository>(context, listen: false).addMensagem({
       "texto": const BoxCard(
           color: ThemeColors.erroColor,
           widget: Text("Sem conexão com a internet")),
