@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
-import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/database/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/utils/verify_connection.dart';
-import 'package:inteligence_artificial_app/pages/gpt_screen/widgets/body_messages.dart';
+import 'package:inteligence_artificial_app/pages/chat/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
-import 'package:inteligence_artificial_app/components/input_box_message.dart';
+import 'package:inteligence_artificial_app/pages/widgets/input_box_message.dart';
 import 'package:provider/provider.dart';
 
 class GptScreen extends StatefulWidget {

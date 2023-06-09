@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:inteligence_artificial_app/widgets/btn_ink.dart';
-import 'package:inteligence_artificial_app/widgets/btn_primario.dart';
-import 'package:inteligence_artificial_app/widgets/label_text_input.dart';
+import 'package:inteligence_artificial_app/pages/widgets/btn_ink.dart';
+import 'package:inteligence_artificial_app/pages/widgets/btn_primario.dart';
+import 'package:inteligence_artificial_app/pages/widgets/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/login_controller.dart';
+import 'package:inteligence_artificial_app/pages/widgets/logo.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -16,7 +15,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final _formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
   final auth = FirebaseAuth.instance;
   var _emailController = TextEditingController();
   var _senhaController = TextEditingController();
@@ -44,14 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 400,
                 child: Stack(
                   children: [
-                    Positioned(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage("assets/imgs/background.png"),
-                                fit: BoxFit.fill)),
-                      ),
-                    ),
+                    _backgroundRoxo(),
                     Positioned(
                       top: 50,
                       left: 0,
@@ -59,13 +50,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: Center(
                         child: Column(
                           children: [
-                            Image.asset("assets/app/logo_melhorada_branca.png",
-                                width: 200),
-                            Text(
-                              "IA Assistente",
-                              style: TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.w600),
-                            )
+                            logo(),
+                            _logoLabel()
                           ],
                         ),
                       ),
@@ -266,4 +252,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
+}
+
+Widget _logoLabel() {
+  return Text(
+    "IA Assistente",
+    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+  );
+}
+
+Widget _backgroundRoxo() {
+  return Positioned(
+    child: Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/imgs/background.png"),
+              fit: BoxFit.fill)),
+    ),
+  );
 }

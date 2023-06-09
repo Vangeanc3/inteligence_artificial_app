@@ -12,9 +12,6 @@ class LoginController with AsyncStateMixin {
       signInWithGoogle(),
     ).then((value) {
       if (value != null) {
-        print(
-            "----------------------------------------------------------------------------------------------------------");
-        print(value);
         Navigator.pushReplacementNamed(context, "/gpt");
       }
     });

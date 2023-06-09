@@ -1,4 +1,4 @@
-import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/database/mensagens_dao.dart';
 import "package:sqflite/sqflite.dart";
 import "package:path/path.dart";
 

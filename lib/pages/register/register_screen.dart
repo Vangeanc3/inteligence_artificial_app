@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/widgets/label_text_input.dart';
-import 'package:inteligence_artificial_app/controllers/login_controller.dart';
+import 'package:inteligence_artificial_app/pages/widgets/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/signup_controller.dart';
+import 'package:inteligence_artificial_app/pages/widgets/logo.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -72,7 +72,7 @@ class RegisterScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
                         children: [
-                          _logo(),
+                          logo(),
                           Padding(
                             padding: const EdgeInsets.only(top: 0),
                             child: _iconsLogin(),
@@ -154,13 +154,4 @@ Widget _iconsLogin() {
   );
 }
 
-Widget _logo() {
-  return Center(
-    child: SizedBox(
-      child: Image.asset(
-        "assets/app/logo_melhorada_branca.png",
-        width: 200,
-      ),
-    ),
-  );
-}
+

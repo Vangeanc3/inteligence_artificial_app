@@ -1,8 +1,8 @@
 import 'package:asyncstate/class/async_class.dart';
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/pages/gpt_screen/gpt_screen.dart';
-import 'package:inteligence_artificial_app/pages/register_screen/register_screen.dart';
-import 'package:inteligence_artificial_app/pages/welcome_screen/welcome_screen.dart';
+import 'package:inteligence_artificial_app/pages/chat/gpt_screen.dart';
+import 'package:inteligence_artificial_app/pages/register/register_screen.dart';
+import 'package:inteligence_artificial_app/pages/welcome/welcome_screen.dart';
 import 'package:inteligence_artificial_app/pages/splash/splash_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
 import 'package:page_transition/page_transition.dart';

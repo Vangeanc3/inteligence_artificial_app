@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
-import 'package:inteligence_artificial_app/data/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/database/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/utils/form_validator_helper.dart';
 import 'package:inteligence_artificial_app/utils/send_messager_helper.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
