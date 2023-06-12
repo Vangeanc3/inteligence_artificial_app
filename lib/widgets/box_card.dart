@@ -21,6 +21,6 @@ class BoxCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           color: escolheCor(context)),
       child: widget,
-    );
+    );  
   }
 }

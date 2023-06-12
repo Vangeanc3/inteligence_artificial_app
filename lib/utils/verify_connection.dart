@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/pages/widgets/box_card.dart';
+import 'package:inteligence_artificial_app/widgets/box_card.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';

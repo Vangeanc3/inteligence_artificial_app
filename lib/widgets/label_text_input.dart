@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/form_validator_helper.dart';
+import '../utils/form_validator_helper.dart';
 
 class LabelTextInput extends StatelessWidget {
   final String hintText;

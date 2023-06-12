@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:inteligence_artificial_app/pages/widgets/btn_ink.dart';
-import 'package:inteligence_artificial_app/pages/widgets/btn_primario.dart';
-import 'package:inteligence_artificial_app/pages/widgets/label_text_input.dart';
+import 'package:inteligence_artificial_app/widgets/btn_ink.dart';
+import 'package:inteligence_artificial_app/widgets/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/login_controller.dart';
-import 'package:inteligence_artificial_app/pages/widgets/logo.dart';
+import 'package:inteligence_artificial_app/widgets/logo.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -49,10 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       right: 0,
                       child: Center(
                         child: Column(
-                          children: [
-                            logo(),
-                            _logoLabel()
-                          ],
+                          children: [logo(), _logoLabel()],
                         ),
                       ),
                     ),
@@ -63,13 +59,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 padding: EdgeInsets.fromLTRB(20, 150, 20, 10),
                 child: Container(
                   height: 50,
-                  child: BtnPrimario(
-                    texto: "Entrar",
-                    context: context,
-                    icon: null,
-                    corTexto: Colors.white,
-                    cor: Colors.purple[900],
-                    funcao: () async {
+                  child: InkWell(
+                    onTap: () async {
                       final user = auth.currentUser;
                       if (user != null) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -91,13 +82,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     left: 20, right: 20, top: 10),
                                 child: Column(
                                   children: [
-                                    BtnPrimario(
-                                      context: context,
-                                      corTexto: Colors.white,
-                                      texto: "Entrar com Email",
-                                      cor: Colors.black,
-                                      icon: Icon(Icons.email),
-                                      funcao: () {
+                                    InkWell(
+                                      onTap: () {
                                         // SE FOR LOGAR COM EMAIL ABRE UM FORMULARIO MODAL
                                         Navigator.pop(context);
                                         showModalBottomSheet(
@@ -151,7 +137,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                                         context)
                                                                     .viewInsets
                                                                     .bottom),
-                                                        child: BtnPrimario(
+                                                        child: BtnInk(
                                                           context: context,
                                                           texto: "Entrar",
                                                           corTexto:
@@ -159,7 +145,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                           cor: Colors.black,
                                                           icon:
                                                               Icon(Icons.send),
-                                                          funcao: () async {
+                                                          function: () async {
                                                             LoginController()
                                                                 .passwordLoginMixin(
                                                                     _formKey,
@@ -169,7 +155,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                                     context);
                                                           },
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -178,6 +164,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           },
                                         );
                                       },
+                                      child: BtnInk(
+                                        context: context,
+                                        corTexto: Colors.white,
+                                        texto: "Entrar com Email",
+                                        cor: Colors.black,
+                                        icon: Icon(Icons.email),
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -197,6 +190,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                 .googleLoginMixin(context);
                                           },
                                           child: BtnInk(
+                                            context: context,
                                             corTexto: Colors.black,
                                             texto: "Entrar com Google",
                                             cor: Colors.white,
@@ -206,16 +200,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             ),
                                           )),
                                     ),
-                                    BtnPrimario(
-                                      context: context,
-                                      corTexto: Colors.white,
-                                      texto: "Entrar com Facebook",
-                                      cor: Colors.blue,
-                                      icon: Image.asset(
-                                        "assets/icons/facebook.png",
-                                        height: 20,
+                                    InkWell(
+                                      child: BtnInk(
+                                        context: context,
+                                        corTexto: Colors.white,
+                                        texto: "Entrar com Facebook",
+                                        cor: Colors.blue,
+                                        icon: Image.asset(
+                                          "assets/icons/facebook.png",
+                                          height: 20,
+                                        ),
                                       ),
-                                      funcao: () {},
                                     ),
                                   ],
                                 ),
@@ -224,9 +219,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           },
                         );
                       }
-
-                      // Navigator.pushNamed(context, "/login");
                     },
+                    child: BtnInk(
+                      texto: "Entrar",
+                      context: context,
+                      icon: null,
+                      corTexto: Colors.white,
+                      cor: Colors.purple[900],
+                    ),
                   ),
                 ),
               ),
@@ -234,16 +234,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   height: 50,
-                  child: BtnPrimario(
-                      borda: true,
-                      context: context,
-                      texto: "Criar Conta",
-                      cor: Colors.transparent,
-                      icon: null,
-                      funcao: () {
-                        Navigator.pushNamed(context, "/register");
-                      },
-                      corTexto: Colors.white),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/register");
+                    },
+                    child: BtnInk(
+                        borda: true,
+                        context: context,
+                        texto: "Criar Conta",
+                        cor: Colors.transparent,
+                        icon: null,
+                        corTexto: Colors.white),
+                  ),
                 ),
               )
             ],

@@ -7,7 +7,7 @@ import 'package:inteligence_artificial_app/repositories/mensagens_titulo.dart';
 import 'package:inteligence_artificial_app/utils/verify_connection.dart';
 import 'package:inteligence_artificial_app/pages/chat/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
-import 'package:inteligence_artificial_app/pages/widgets/input_box_message.dart';
+import 'package:inteligence_artificial_app/widgets/input_box_message.dart';
 import 'package:provider/provider.dart';
 
 class GptScreen extends StatefulWidget {

@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/pages/widgets/label_text_input.dart';
+import 'package:inteligence_artificial_app/widgets/label_text_input.dart';
 import 'package:inteligence_artificial_app/controllers/signup_controller.dart';
-import 'package:inteligence_artificial_app/pages/widgets/logo.dart';
+import 'package:inteligence_artificial_app/widgets/logo.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 
 class RegisterScreen extends StatelessWidget {
