@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
-import 'package:inteligence_artificial_app/database/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/repositories/database/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_titulo.dart';
-import 'package:inteligence_artificial_app/utils/verify_connection.dart';
 import 'package:inteligence_artificial_app/pages/chat/widgets/body_messages.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
+import 'package:inteligence_artificial_app/utils/connection_utils.dart';
 import 'package:inteligence_artificial_app/widgets/input_box_message.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class _GptScreenState extends State<GptScreen> {
   void initState() {
     super.initState();
     print("MENSAGEM:  $mensagens");
-    verifyConnection(context);
+    ConnectionUtils().verifyConnection(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       limpaMsgs(context);
       addMsgInicial(context);

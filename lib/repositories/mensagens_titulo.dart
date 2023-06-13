@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inteligence_artificial_app/database/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/repositories/database/mensagens_dao.dart';
 
 class MensagensTitulo extends ChangeNotifier {
   List<Map<String, dynamic>> mensagensTitulo;

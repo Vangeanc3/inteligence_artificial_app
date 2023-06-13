@@ -2,7 +2,6 @@ import 'package:asyncstate/class/async_class.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligence_artificial_app/pages/chat/gpt_screen.dart';
 import 'package:inteligence_artificial_app/pages/register/register_screen.dart';
-import 'package:inteligence_artificial_app/pages/teste.dart';
 import 'package:inteligence_artificial_app/pages/welcome/welcome_screen.dart';
 import 'package:inteligence_artificial_app/pages/splash/splash_screen.dart';
 import 'package:inteligence_artificial_app/themes/my_theme.dart';
@@ -23,7 +22,6 @@ class MeuAplicativo extends StatelessWidget {
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => const SplashScreen(),
-        "/teste": (context) => const Teste()
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {

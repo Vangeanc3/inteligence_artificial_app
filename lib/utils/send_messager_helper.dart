@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:inteligence_artificial_app/widgets/box_card.dart';
 import 'package:inteligence_artificial_app/repositories/mensagens_repository.dart';
-import 'package:inteligence_artificial_app/database/mensagens_dao.dart';
+import 'package:inteligence_artificial_app/repositories/database/mensagens_dao.dart';
 import 'package:inteligence_artificial_app/themes/theme_colors.dart';
 import 'package:provider/provider.dart';
 

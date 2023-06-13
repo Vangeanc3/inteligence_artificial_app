@@ -1,4 +1,4 @@
-import 'package:inteligence_artificial_app/database/database.dart';
+import 'package:inteligence_artificial_app/repositories/database/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MensagensDao {
