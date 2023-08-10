@@ -20,7 +20,7 @@ void main() async {
     defaultLoaderWidget: MyLoading(),
   );
 
-  OpenAI.apiKey = "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";
+  OpenAI.apiKey = "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";
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
